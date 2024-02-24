@@ -1,4 +1,5 @@
 import dal from "../Utils/dal";
+import encrypt from "../Utils/encrypt";
 import auth from "../Utils/auth";
 import { UnauthorizedError, ValidationError } from "../Models/client-errors";
 import UserModel from "../Models/user-model";
@@ -11,8 +12,7 @@ async function login(creds: CredentialsModel): Promise<string> {
 
     const raw_text = await dal.readString(config.usersEndpoint);
     const allUsers: UserModel[] = JSON.parse(raw_text);
-    creds.password = auth.hash(creds.password);
-    console.log(creds.password);
+    creds.password = encrypt.sha256(creds.password);
     const users = allUsers.filter(u => u.password === creds.password && u.username === creds.username);
     if (users.length < 1) throw new UnauthorizedError("Incorrect username or password");
     const user = new UserModel(users[0]);

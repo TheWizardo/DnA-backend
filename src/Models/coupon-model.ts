@@ -10,7 +10,7 @@ class CouponModel {
     }
 
     private static validationScheme = Joi.object({
-        code: Joi.string().required().length(64),
+        code: Joi.string().required(),
         percentage: Joi.number().required().positive().integer().max(100),
     });
 
