@@ -45,7 +45,7 @@ router.post("/orders", verify.verifyAdmin, async (req: Request, res: Response, n
 
 router.get("/orders/search/:phone", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const order = await ordersLogic.getOrderByPhone(req.params.id);
+        const order = await ordersLogic.getOrderByPhone(req.params.phone);
         res.json(order);
     }
     catch (err: any) {
@@ -53,16 +53,28 @@ router.get("/orders/search/:phone", async (req: Request, res: Response, next: Ne
     }
 });
 
+// router.put("/orders/:id", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//         req.body.price = +req.body.price;
+//         req.body.amount = +req.body.amount;
+//         req.body.street_num = req.body?.street_num ? +req.body?.street_num : undefined;
+//         req.body.apartment = req.body?.apartment ? +req.body?.apartment : undefined;
+//         req.body.dedicate = req.body?.dedicate === "true" ? true : false;
+//         req.body.for_self = req.body?.for_self === "true" ? true : false;
+//
+//         const order = new OrderModel(req.body);
+//         const updatedOrder = await ordersLogic.updateOrder(order);
+//         res.json(updatedOrder);
+//     }
+//     catch (err: any) {
+//         next(err);
+//     }
+// });
+
 router.put("/orders/:id", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        req.body.price = +req.body.price;
-        req.body.amount = +req.body.amount;
-        req.body.street_num = req.body?.street_num ? +req.body?.street_num : undefined;
-        req.body.apartment = req.body?.apartment ? +req.body?.apartment : undefined;
-        req.body.dedicate = req.body?.dedicate === "true" ? true : false;
-        req.body.for_self = req.body?.for_self === "true" ? true : false;
-
-        const order = new OrderModel(req.body);
+        const order = new OrderModel(await ordersLogic.getOrderById(req.params.id));
+        order.tracking_number = req.body.tracking_number;
         const updatedOrder = await ordersLogic.updateOrder(order);
         res.json(updatedOrder);
     }

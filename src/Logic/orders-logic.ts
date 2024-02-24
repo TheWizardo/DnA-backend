@@ -1,5 +1,5 @@
 import dal from "../Utils/dal";
-import { IdNotFound, UnauthorizedError, ValidationError } from "../Models/client-errors";
+import { ForbiddenError, IdNotFound, UnauthorizedError, ValidationError } from "../Models/client-errors";
 import OrderModel from "../Models/order-model";
 import config from "../Utils/config";
 
@@ -45,6 +45,11 @@ async function newOrder(order: OrderModel): Promise<OrderModel> {
     if (error) throw new ValidationError(error);
 
     const allOrders = await getAllOrders();
+    const filtered = allOrders.filter(o => o.id === order.id);
+    // making sure we have that order
+    if (filtered.length > 0) {
+        throw new ForbiddenError("Cannot have multiple orders with the same Id");
+    }
     allOrders.push(order);
     await dal.writeFile(config.ordersEndpoint, JSON.stringify(allOrders))
     return order;
