@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import RSA from "node-rsa";
-import { ForbiddenError } from "../Models/client-errors";
+import { ForbiddenError } from "../Models/errors-models";
 
 const salt = "YellowBrickRoad";
 const key = new RSA({ b: 512 });

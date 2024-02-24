@@ -1,5 +1,5 @@
 import dal from "../Utils/dal";
-import { ForbiddenError, IdNotFound, UnauthorizedError, ValidationError } from "../Models/client-errors";
+import { ForbiddenError, IdNotFound, UnauthorizedError, ValidationError } from "../Models/errors-models";
 import config from "../Utils/config";
 import CouponModel from "../Models/coupon-model";
 import encrypt from "../Utils/encrypt";

@@ -1,7 +1,8 @@
 import dal from "../Utils/dal";
-import { ForbiddenError, IdNotFound, UnauthorizedError, ValidationError } from "../Models/client-errors";
+import { ForbiddenError, IdNotFound, ServiceError, UnauthorizedError, ValidationError } from "../Models/errors-models";
 import OrderModel from "../Models/order-model";
 import config from "../Utils/config";
+import mailService from "../Services/mailService";
 
 async function getAllOrders(): Promise<OrderModel[]> {
     const raw_text = await dal.readString(config.ordersEndpoint);
@@ -50,6 +51,8 @@ async function newOrder(order: OrderModel): Promise<OrderModel> {
     if (filtered.length > 0) {
         throw new ForbiddenError("Cannot have multiple orders with the same Id");
     }
+    const success = await mailService.sendPurchaseEmail(order);
+    if (!success) throw new ServiceError("Failed to contact server.");
     allOrders.push(order);
     await dal.writeFile(config.ordersEndpoint, JSON.stringify(allOrders))
     return order;

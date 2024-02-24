@@ -1,7 +1,7 @@
 import dal from "../Utils/dal";
 import encrypt from "../Utils/encrypt";
 import auth from "../Utils/auth";
-import { UnauthorizedError, ValidationError } from "../Models/client-errors";
+import { UnauthorizedError, ValidationError } from "../Models/errors-models";
 import UserModel from "../Models/user-model";
 import CredentialsModel from "../Models/credentials-model";
 import config from "../Utils/config";

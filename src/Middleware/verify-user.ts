@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import auth from "../Utils/auth";
-import { ForbiddenError, UnauthorizedError } from "../Models/client-errors";
+import { ForbiddenError, UnauthorizedError } from "../Models/errors-models";
 
 async function isUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.header("authorization");
