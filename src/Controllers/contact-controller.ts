@@ -9,7 +9,7 @@ router.post("/contact", async (req: Request, res: Response, next: NextFunction) 
     try {
         const contact = new ContactModel(req.body);
         await contactLogic.contact(contact);
-        res.sendStatus(200);
+        res.sendStatus(201);
     }
     catch (err: any) {
         next(err);
