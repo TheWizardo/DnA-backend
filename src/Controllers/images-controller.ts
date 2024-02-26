@@ -13,7 +13,7 @@ router.get("/images/:name", async (req: Request, res: Response, next: NextFuncti
         res.sendFile(filePath);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "ImagesController-GetImage"});
     }
 });
 

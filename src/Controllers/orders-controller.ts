@@ -11,7 +11,7 @@ router.get("/orders", verify.verifyAdmin, async (req: Request, res: Response, ne
         res.json(allOrders);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "OrdersController-GetAll"});
     }
 });
 
@@ -21,11 +21,11 @@ router.get("/orders/:id", async (req: Request, res: Response, next: NextFunction
         res.json(order);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "OrdersController-GetOne"});
     }
 });
 
-router.post("/orders", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
+router.post("/orders", async (req: Request, res: Response, next: NextFunction) => {
     try {
         req.body.price = +req.body.price;
         req.body.amount = +req.body.amount;
@@ -39,7 +39,7 @@ router.post("/orders", verify.verifyAdmin, async (req: Request, res: Response, n
         res.status(201).json(addedOrder);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "OrdersController-NewOrder"});
     }
 });
 
@@ -49,7 +49,7 @@ router.get("/orders/search/:phone", async (req: Request, res: Response, next: Ne
         res.json(order);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "OrdersController-SearchByPhone"});
     }
 });
 
@@ -67,7 +67,7 @@ router.get("/orders/search/:phone", async (req: Request, res: Response, next: Ne
 //         res.json(updatedOrder);
 //     }
 //     catch (err: any) {
-//         next(err);
+//         next({error: err, from: "OrdersController-AugmentOrder"});
 //     }
 // });
 
@@ -79,7 +79,7 @@ router.put("/orders/:id", verify.verifyAdmin, async (req: Request, res: Response
         res.json(updatedOrder);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "OrdersController-TrackingNumber"});
     }
 });
 

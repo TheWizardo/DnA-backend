@@ -11,7 +11,7 @@ router.post("/auth/login", async (req: Request, res: Response, next: NextFunctio
         res.json(token);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "AuthController-Login"});
     }
 });
 

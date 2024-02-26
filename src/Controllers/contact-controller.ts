@@ -12,7 +12,7 @@ router.post("/contact", async (req: Request, res: Response, next: NextFunction) 
         res.sendStatus(201);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "ContactController-ContactMe"});
     }
 });
 

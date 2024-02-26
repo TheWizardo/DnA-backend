@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import auth from "../Utils/auth";
-import { ForbiddenError, UnauthorizedError } from "../Models/errors-models";
+import { UnauthorizedError } from "../Models/errors-models";
 
 async function isUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.header("authorization");
     const isValid = await auth.verifyToken(authHeader);
     if (!isValid) {
-        next(new UnauthorizedError("You are not logged in"));
+        next(new UnauthorizedError("You are not logged in", "VerifyUser-isUser"));
         return;
     }
 }
@@ -19,7 +19,7 @@ async function verifyAdmin(req: Request, res: Response, next: NextFunction): Pro
     // check the user's role
     const role = auth.getUserRoleFromToken(authHeader);
     if (role !== "admin") {
-        next(new ForbiddenError("Forbidden"));
+        next(new UnauthorizedError("Unauthorized", "VerifyUser-verifyAdmin"));
         return;
     }
     next();

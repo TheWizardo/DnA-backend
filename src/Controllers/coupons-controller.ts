@@ -11,7 +11,7 @@ router.get("/coupons", verify.verifyAdmin, async (req: Request, res: Response, n
         res.json(allCouponS);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "CouponsController-GetAll"});
     }
 });
 
@@ -21,7 +21,7 @@ router.get("/coupons/:code", async (req: Request, res: Response, next: NextFunct
         res.json(order);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "CouponsController-GetFromCode"});
     }
 });
 
@@ -34,7 +34,7 @@ router.post("/coupons", verify.verifyAdmin, async (req: Request, res: Response, 
         res.status(201).json(addedCoupon);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "CouponsController-NewCoupon"});
     }
 });
 
@@ -44,7 +44,7 @@ router.delete("/coupons/:code", verify.verifyAdmin, async (req: Request, res: Re
         res.sendStatus(204);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "CouponsController-DeleteCoupon"});
     }
 });
 
@@ -57,7 +57,7 @@ router.put("/coupons/:code", verify.verifyAdmin, async (req: Request, res: Respo
         res.json(updatedCoupon);
     }
     catch (err: any) {
-        next(err);
+        next({error: err, from: "CouponsController-AugmentCoupon"});
     }
 });
 

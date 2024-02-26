@@ -4,10 +4,9 @@ import mailService from "../Services/mailService";
 
 async function contact(contact: ContactModel): Promise<void> {
     const error = contact.validate();
-    if (error) throw new ValidationError(error);
+    if (error) throw new ValidationError(error, "ContactLogic-Contact");
 
-    const success = await mailService.sendContactEmail(contact);
-    if (!success) throw new ServiceError("Failed to contact server.");
+    await mailService.sendContactEmail(contact);
     return;
 }
 
