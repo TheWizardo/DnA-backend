@@ -13,8 +13,8 @@ class Config {
     public EmailJs = "https://api.emailjs.com/api/v1.0/email/send";
     public EmailJsUserId = "OEjoskM3upjjVzDsH";
     public EmailJsServiceId = "demons-and-angels";
-    public EmailJsContactTemplateId = "demons-and-angels";
-    public EmailJsPurchaseTemplateId = "demons-and-angels";
+    public EmailJsContactTemplateId = "template_oqn5pne";
+    public EmailJsPurchaseTemplateId = "template_dw1mwas";
 }
 
 const config = new Config();
