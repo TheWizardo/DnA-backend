@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-import authLogic from "../Logic/auth-logic";
 import ContactModel from "../Models/contact-model";
 import contactLogic from "../Logic/contact-logic";
 

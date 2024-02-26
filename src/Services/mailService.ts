@@ -17,7 +17,7 @@ class MailService {
 
     private async sendEmail<T>(object: T, template: string): Promise<boolean> {
         try {
-            const result: AxiosResponse = await axios.post<EmailJS<T>>(config.EmailJs, {
+            await axios.post<EmailJS<T>>(config.EmailJs, {
                 service_id: config.EmailJsServiceId,
                 template_id: template,
                 template_params: object,

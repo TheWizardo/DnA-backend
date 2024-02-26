@@ -4,6 +4,7 @@ import routeNotFound from './Middleware/route-not-found';
 import authController from './Controllers/auth-controller';
 import imagesController from './Controllers/images-controller';
 import couponsController from './Controllers/coupons-controller';
+import contactController from './Controllers/contact-controller';
 import ordersController from './Controllers/orders-controller';
 import expressRateLimit from 'express-rate-limit';
 import cors from 'cors';
@@ -22,6 +23,7 @@ server.use(logger); ////////////////////////////////////////////////////////////
 server.use("/api/v1", authController);
 server.use("/api/v1", imagesController);
 server.use("/api/v1", couponsController);
+server.use("/api/v1", contactController);
 server.use("/api/v1", ordersController);
 server.use("*", routeNotFound);
 server.use(catchAll);
