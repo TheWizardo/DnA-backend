@@ -14,7 +14,7 @@
     },
     {
         "id": "30549757",
-        "type": "PrintedBook",
+        "type": "printedBook",
         "first_name": "שי",
         "last_name": "יונה",
         "amount": 1,
@@ -30,5 +30,51 @@
         "dedicate": false,
         "for_self": false,
         "tracking_number": "RR245115768IL"
+    },
+    {
+        "order_number": "69898663",
+        "type": "printedBook",
+        "first_name": "רועי",
+        "last_name": "מיכאלי",
+        "amount": 1,
+        "phone": "0544304584",
+        "street": "שרת משה",
+        "street_num": 1,
+        "apartment": 1,
+        "city": "קרית טבעון",
+        "zip": "3602601",
+        "email": "roey2009@gmail.com",
+        "comments": "נא להודיע (טקסט) ביום המשלוח, שנתכונן",
+        "price": 88,
+        "dedication_name": "no_need"
+    },
+    {
+        "order_number": "34129571",
+        "type": "printedBook",
+        "first_name": "טלדה",
+        "last_name": "דוד",
+        "amount": 1,
+        "phone": "0525001967",
+        "street": "דרך העצמאות",
+        "street_num": 41,
+        "apartment": 20,
+        "city": "חיפה",
+        "zip": "3303321",
+        "email": "taldavi4@gmail.com",
+        "comments": "לשלוח לשטח בבקשה",
+        "price": 85,
+        "dedication_name": "טלטול"
+    },
+    {
+        "order_number": "21194041",
+        "type": "ePub",
+        "first_name": "דניאל",
+        "last_name": "רולניק",
+        "amount": 1,
+        "phone": "0502560730",
+        "email": "danrol92@gmail.com",
+        "comments": "בוא נראה מה כתבת",
+        "price": 33,
+        "dedication_name": "no_need"
     }
 ]
