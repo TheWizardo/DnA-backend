@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "run-ts": "ts-node src/app.ts",
+    "run-ts-dev": "ts-node src/app.ts NODE_ENV=development",
+    "run-ts-prod": "ts-node src/app.ts NODE_ENV=development",
     "inner-build": "tsc --build",
     "inner-copy": "copy package.json build",
     "build": "npm run inner-build & npm run inner-copy"

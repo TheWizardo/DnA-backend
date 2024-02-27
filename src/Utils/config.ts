@@ -1,8 +1,7 @@
 import path from "path";
 
 class Config {
-    public environment = "development";
-    // public environment = "production";
+    public environment = process.env.NODE_ENV; //"development" || "production";
     public port = +process.env.PORT || 3001;
     public dataFolder = path.resolve(__dirname, "..", "Assets", "data");
     public imagesFolder = path.resolve(__dirname, "..", "Assets", "images");
