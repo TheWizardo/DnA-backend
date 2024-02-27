@@ -9,8 +9,9 @@
     "run-ts-dev": "ts-node src/app.ts NODE_ENV=development",
     "run-ts-prod": "ts-node src/app.ts NODE_ENV=development",
     "inner-build": "tsc --build",
-    "inner-copy": "copy package.json build",
-    "build": "npm run inner-build & npm run inner-copy"
+    "inner-copy-package": "copy package.json build",
+    "inner-copy-assets": "robocopy ./src/Assets ./build/Assets /e",
+    "build": "npm run inner-build & npm run inner-copy-package & npm run inner-copy-assets"
   },
   "keywords": [],
   "author": "oz",
