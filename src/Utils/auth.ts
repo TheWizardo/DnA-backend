@@ -6,7 +6,7 @@ const secretKey = "LionsAndTigersAndBears";
 function generateNewToken(user: UserModel): string {
     const container = { user };
     // signing a new token for the given user
-    const token = jwt.sign(container, secretKey, { expiresIn: "3h" });
+    const token = jwt.sign(container, secretKey, { expiresIn: "30m" });
     return token;
 }
 
