@@ -43,6 +43,7 @@ var dal_1 = __importDefault(require("../Utils/dal"));
 var errors_models_1 = require("../Models/errors-models");
 var config_1 = __importDefault(require("../Utils/config"));
 var encryptionService_1 = __importDefault(require("../Services/encryptionService"));
+var uuid_1 = require("uuid");
 function getAllCoupons(privateKey) {
     return __awaiter(this, void 0, void 0, function () {
         var raw_text, coupons;
@@ -63,7 +64,7 @@ function getAllCoupons(privateKey) {
 // %2F => /
 // %2B => +
 // %3D => =
-function getCouponPercentage(couponCode) {
+function getCoupon(couponCode) {
     return __awaiter(this, void 0, void 0, function () {
         var allCoupons, allCouponsBut;
         return __generator(this, function (_a) {
@@ -74,14 +75,14 @@ function getCouponPercentage(couponCode) {
                     allCouponsBut = allCoupons.filter(function (c) { return c.code !== couponCode; });
                     // making sure we have that coupon
                     if (allCoupons.length === allCouponsBut.length) {
-                        throw new errors_models_1.IdNotFound(couponCode, "CouponLogic-getCouponPercentage");
+                        throw new errors_models_1.IdNotFound(couponCode, "CouponLogic-getCoupon");
                     }
-                    return [2 /*return*/, allCoupons.filter(function (c) { return c.code === couponCode; })[0].percentage];
+                    return [2 /*return*/, allCoupons.filter(function (c) { return c.code === couponCode; })[0]];
             }
         });
     });
 }
-function deleteCoupon(couponCode, privateKey) {
+function deleteCoupon(couponId, privateKey) {
     return __awaiter(this, void 0, void 0, function () {
         var allCoupons, allCouponsBut;
         return __generator(this, function (_a) {
@@ -92,10 +93,10 @@ function deleteCoupon(couponCode, privateKey) {
                     return [4 /*yield*/, getAllCoupons()];
                 case 1:
                     allCoupons = _a.sent();
-                    allCouponsBut = allCoupons.filter(function (c) { return encryptionService_1.default.rsaDecrypt(c.code, privateKey) !== couponCode; });
+                    allCouponsBut = allCoupons.filter(function (c) { return c.id !== couponId; });
                     // making sure we have that coupon
                     if (allCoupons.length === allCouponsBut.length) {
-                        throw new errors_models_1.IdNotFound(couponCode, "CouponLogic-deleteCoupon");
+                        throw new errors_models_1.IdNotFound(couponId, "CouponLogic-deleteCoupon");
                     }
                     return [4 /*yield*/, dal_1.default.writeFile(config_1.default.couponsEndpoint, JSON.stringify(allCouponsBut))];
                 case 2:
@@ -105,7 +106,7 @@ function deleteCoupon(couponCode, privateKey) {
         });
     });
 }
-function updateCoupon(couponCode, coupon, privateKey) {
+function updateCoupon(couponId, coupon, privateKey) {
     return __awaiter(this, void 0, void 0, function () {
         var error, allCoupons, allCouponsBut, filtered;
         return __generator(this, function (_a) {
@@ -119,10 +120,10 @@ function updateCoupon(couponCode, coupon, privateKey) {
                     return [4 /*yield*/, getAllCoupons()];
                 case 1:
                     allCoupons = _a.sent();
-                    allCouponsBut = allCoupons.filter(function (c) { return encryptionService_1.default.rsaDecrypt(c.code, privateKey) !== couponCode; });
+                    allCouponsBut = allCoupons.filter(function (c) { return c.id !== couponId; });
                     // making sure we have that coupon
                     if (allCoupons.length === allCouponsBut.length) {
-                        throw new errors_models_1.IdNotFound(couponCode, "CouponLogic-updateCoupon");
+                        throw new errors_models_1.IdNotFound(couponId, "CouponLogic-updateCoupon");
                     }
                     filtered = allCoupons.filter(function (c) { return encryptionService_1.default.rsaDecrypt(c.code, privateKey) === coupon.code; });
                     if (filtered.length > 0) {
@@ -146,6 +147,8 @@ function addCoupon(coupon, privateKey) {
                 case 0:
                     if (!privateKey)
                         throw new errors_models_1.UnauthorizedError("privateKey not provided", "CouponLogic-addCoupon");
+                    // verifying given coupon
+                    coupon.id = (0, uuid_1.v4)();
                     error = coupon.validate();
                     if (error)
                         throw new errors_models_1.ValidationError(error, "CouponLogic-addCoupon");
@@ -166,10 +169,14 @@ function addCoupon(coupon, privateKey) {
         });
     });
 }
+function decodePrivateKey(privatekey) {
+    return decodeURI(privatekey).replaceAll("%2F", "/").replaceAll("%3D", "=");
+}
 exports.default = {
     getAllCoupons: getAllCoupons,
-    getCouponPercentage: getCouponPercentage,
+    getCoupon: getCoupon,
     deleteCoupon: deleteCoupon,
     updateCoupon: updateCoupon,
-    addCoupon: addCoupon
+    addCoupon: addCoupon,
+    decodePrivateKey: decodePrivateKey
 };

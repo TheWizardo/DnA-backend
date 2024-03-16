@@ -50,7 +50,7 @@ router.get("/coupons", verify_user_1.default.verifyAdmin, function (req, res, ne
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, coupon_logic_1.default.getAllCoupons(req.body.privateKey)];
+                return [4 /*yield*/, coupon_logic_1.default.getAllCoupons(coupon_logic_1.default.decodePrivateKey(req.query.privateKey))];
             case 1:
                 allCouponS = _a.sent();
                 res.json(allCouponS);
@@ -69,7 +69,7 @@ router.get("/coupons/:code", function (req, res, next) { return __awaiter(void 0
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, coupon_logic_1.default.getCouponPercentage(req.params.code)];
+                return [4 /*yield*/, coupon_logic_1.default.getCoupon(req.params.code)];
             case 1:
                 order = _a.sent();
                 res.json(order);
@@ -88,9 +88,9 @@ router.post("/coupons", verify_user_1.default.verifyAdmin, function (req, res, n
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                req.body.percentage = +req.body.percentage;
+                req.body.discount = +req.body.discount;
                 coupon = new coupon_model_1.default(req.body);
-                return [4 /*yield*/, coupon_logic_1.default.addCoupon(coupon, req.body.privateKey)];
+                return [4 /*yield*/, coupon_logic_1.default.addCoupon(coupon, coupon_logic_1.default.decodePrivateKey(req.query.privateKey))];
             case 1:
                 addedCoupon = _a.sent();
                 res.status(201).json(addedCoupon);
@@ -103,13 +103,13 @@ router.post("/coupons", verify_user_1.default.verifyAdmin, function (req, res, n
         }
     });
 }); });
-router.delete("/coupons/:code", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+router.delete("/coupons/:id", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, coupon_logic_1.default.deleteCoupon(req.params.code, req.body.privateKey)];
+                return [4 /*yield*/, coupon_logic_1.default.deleteCoupon(req.params.id, coupon_logic_1.default.decodePrivateKey(req.query.privateKey))];
             case 1:
                 _a.sent();
                 res.sendStatus(204);
@@ -122,15 +122,15 @@ router.delete("/coupons/:code", verify_user_1.default.verifyAdmin, function (req
         }
     });
 }); });
-router.put("/coupons/:code", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/coupons/:id", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var coupon, updatedCoupon, err_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                req.body.percentage = +req.body.percentage;
+                req.body.discount = +req.body.discount;
                 coupon = new coupon_model_1.default(req.body);
-                return [4 /*yield*/, coupon_logic_1.default.updateCoupon(req.params.code, coupon, req.body.privateKey)];
+                return [4 /*yield*/, coupon_logic_1.default.updateCoupon(req.params.id, coupon, coupon_logic_1.default.decodePrivateKey(req.query.privateKey))];
             case 1:
                 updatedCoupon = _a.sent();
                 res.json(updatedCoupon);

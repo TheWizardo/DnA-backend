@@ -53,9 +53,9 @@ function isUser(req, res, next) {
                     isValid = _a.sent();
                     if (!isValid) {
                         next(new errors_models_1.UnauthorizedError("You are not logged in", "VerifyUser-isUser"));
-                        return [2 /*return*/];
+                        return [2 /*return*/, false];
                     }
-                    return [2 /*return*/];
+                    return [2 /*return*/, true];
             }
         });
     });
@@ -64,16 +64,26 @@ function verifyAdmin(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var authHeader, role;
         return __generator(this, function (_a) {
-            authHeader = req.header("authorization");
-            // first verify the user
-            isUser(req, res, next);
-            role = auth_1.default.getUserRoleFromToken(authHeader);
-            if (role !== "admin") {
-                next(new errors_models_1.UnauthorizedError("Unauthorized", "VerifyUser-verifyAdmin"));
-                return [2 /*return*/];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, isUser(req, res, next)];
+                case 1:
+                    // first verify the user
+                    if (!(_a.sent()))
+                        return [2 /*return*/];
+                    authHeader = req.header("authorization");
+                    return [4 /*yield*/, auth_1.default.verifyToken(authHeader)];
+                case 2:
+                    // check the user's role
+                    if (!(_a.sent()))
+                        throw new errors_models_1.ValidationError("Invalid Token", "VerifyAdmin");
+                    role = auth_1.default.getUserRoleFromToken(authHeader);
+                    if (role !== "admin") {
+                        next(new errors_models_1.UnauthorizedError("Unauthorized", "VerifyUser-verifyAdmin"));
+                        return [2 /*return*/];
+                    }
+                    next();
+                    return [2 /*return*/];
             }
-            next();
-            return [2 /*return*/];
         });
     });
 }

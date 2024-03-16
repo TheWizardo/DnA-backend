@@ -8,6 +8,7 @@ var OrderModel = /** @class */ (function () {
     function OrderModel(order) {
         this.order_number = order.order_number;
         this.type = order.type;
+        this.time = order.time;
         this.first_name = order.first_name;
         this.last_name = order.last_name;
         this.amount = order.amount;
@@ -31,6 +32,7 @@ var OrderModel = /** @class */ (function () {
     OrderModel.validationScheme = joi_1.default.object({
         order_number: joi_1.default.string().optional().length(8),
         type: joi_1.default.string().required(),
+        time: joi_1.default.number().required().positive(),
         first_name: joi_1.default.string().required().min(2).max(50),
         last_name: joi_1.default.string().required().min(2).max(50),
         amount: joi_1.default.number().positive().integer().required(),

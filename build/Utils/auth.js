@@ -8,7 +8,7 @@ var secretKey = "LionsAndTigersAndBears";
 function generateNewToken(user) {
     var container = { user: user };
     // signing a new token for the given user
-    var token = jsonwebtoken_1.default.sign(container, secretKey, { expiresIn: "3h" });
+    var token = jsonwebtoken_1.default.sign(container, secretKey, { expiresIn: "30m" });
     return token;
 }
 function verifyToken(authHeader) {
