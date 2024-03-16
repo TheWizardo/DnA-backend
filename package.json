@@ -5,9 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "run-ts-dev": "ts-node src/app.ts NODE_ENV=development",
-    "run-ts-prod": "ts-node src/app.ts NODE_ENV=development",
+    "start-dev": "ts-node src/app.ts NODE_ENV=development",
+    "start-prod": "ts-node src/app.ts NODE_ENV=production",
     "inner-build": "tsc --build",
     "inner-copy-package": "copy package.json build",
     "inner-copy-assets": "robocopy ./src/Assets ./build/Assets /e",
