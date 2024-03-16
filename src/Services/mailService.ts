@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import ContactModel from "../Models/contact-model";
 import OrderModel from "../Models/order-model";
 import config from '../Utils/config';

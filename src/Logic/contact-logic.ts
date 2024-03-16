@@ -1,4 +1,4 @@
-import { ServiceError, ValidationError } from "../Models/errors-models";
+import { ValidationError } from "../Models/errors-models";
 import ContactModel from "../Models/contact-model";
 import mailService from "../Services/mailService";
 

@@ -1,5 +1,5 @@
 import dal from "../Utils/dal";
-import { ForbiddenError, IdNotFound, ServiceError, UnauthorizedError, ValidationError } from "../Models/errors-models";
+import { ForbiddenError, IdNotFound, ValidationError } from "../Models/errors-models";
 import OrderModel from "../Models/order-model";
 import config from "../Utils/config";
 import mailService from "../Services/mailService";
