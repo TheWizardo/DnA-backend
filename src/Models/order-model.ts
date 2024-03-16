@@ -3,6 +3,7 @@ import Joi from "joi";
 class OrderModel {
     public order_number: string;
     public type: string;
+    public time: number;
 
     public first_name: string;
     public last_name: string;
@@ -31,6 +32,7 @@ class OrderModel {
     public constructor(order: OrderModel) {
         this.order_number = order.order_number;
         this.type = order.type;
+        this.time = order.time;
         this.first_name = order.first_name;
         this.last_name = order.last_name;
         this.amount = order.amount;
@@ -50,6 +52,7 @@ class OrderModel {
     private static validationScheme = Joi.object({
         order_number: Joi.string().optional().length(8),
         type: Joi.string().required(),
+        time: Joi.number().required().positive(),
         first_name: Joi.string().required().min(2).max(50),
         last_name: Joi.string().required().min(2).max(50),
         amount: Joi.number().positive().integer().required(),
