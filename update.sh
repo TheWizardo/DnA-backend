@@ -1,5 +1,10 @@
+rm -rf DnA-backend
+git clone https://github.com/TheWizardo/DnA-backend.git
+mkdir DnA-backend/logs
+touch DnA-backend/logs/backend.log
+
 now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] stopping pm2 service" > DnA-backend/logs/backend.log
+echo "[$now] stopping pm2 service" >> DnA-backend/logs/backend.log
 
 pm2 stop backend
 
@@ -32,8 +37,10 @@ cd DnA-backend/build
 npm i
 
 now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] dependencies installed" >> DnA-backend/logs/backend.log
+echo "[$now] dependencies installed" >> ../logs/backend.log
 
+cd ..
+cd ..
 
 now=$(date +"%Y-%m-%dT%H:%M:%S")
 echo "[$now] startinf pm2 service" >> DnA-backend/logs/backend.log
