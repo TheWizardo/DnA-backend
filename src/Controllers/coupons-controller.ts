@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/coupons", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const allCouponS = await couponsLogic.getAllCoupons(req.body.privateKey);
+        const allCouponS = await couponsLogic.getAllCoupons(couponsLogic.decodePrivateKey(req.query.privateKey as string));
         res.json(allCouponS);
     }
     catch (err: any) {
@@ -17,7 +17,7 @@ router.get("/coupons", verify.verifyAdmin, async (req: Request, res: Response, n
 
 router.get("/coupons/:code", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const order = await couponsLogic.getCouponPercentage(req.params.code);
+        const order = await couponsLogic.getCoupon(req.params.code);
         res.json(order);
     }
     catch (err: any) {
@@ -27,10 +27,10 @@ router.get("/coupons/:code", async (req: Request, res: Response, next: NextFunct
 
 router.post("/coupons", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        req.body.percentage = +req.body.percentage;
+        req.body.discount = +req.body.discount;
 
         const coupon = new CouponModel(req.body);
-        const addedCoupon = await couponsLogic.addCoupon(coupon, req.body.privateKey);
+        const addedCoupon = await couponsLogic.addCoupon(coupon, couponsLogic.decodePrivateKey(req.query.privateKey as string));
         res.status(201).json(addedCoupon);
     }
     catch (err: any) {
@@ -38,9 +38,9 @@ router.post("/coupons", verify.verifyAdmin, async (req: Request, res: Response, 
     }
 });
 
-router.delete("/coupons/:code", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/coupons/:id", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await couponsLogic.deleteCoupon(req.params.code, req.body.privateKey);
+        await couponsLogic.deleteCoupon(req.params.id, couponsLogic.decodePrivateKey(req.query.privateKey as string));
         res.sendStatus(204);
     }
     catch (err: any) {
@@ -48,12 +48,12 @@ router.delete("/coupons/:code", verify.verifyAdmin, async (req: Request, res: Re
     }
 });
 
-router.put("/coupons/:code", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
+router.put("/coupons/:id", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        req.body.percentage = +req.body.percentage;
+        req.body.discount = +req.body.discount;
 
         const coupon = new CouponModel(req.body);
-        const updatedCoupon = await couponsLogic.updateCoupon(req.params.code, coupon, req.body.privateKey);
+        const updatedCoupon = await couponsLogic.updateCoupon(req.params.id, coupon, couponsLogic.decodePrivateKey(req.query.privateKey as string));
         res.json(updatedCoupon);
     }
     catch (err: any) {

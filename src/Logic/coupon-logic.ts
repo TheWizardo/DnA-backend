@@ -3,6 +3,7 @@ import { ForbiddenError, IdNotFound, UnauthorizedError, ValidationError } from "
 import config from "../Utils/config";
 import CouponModel from "../Models/coupon-model";
 import encryptionService from "../Services/encryptionService";
+import { v4 as uuid } from 'uuid';
 
 async function getAllCoupons(privateKey?: string): Promise<CouponModel[]> {
     const raw_text = await dal.readString(config.couponsEndpoint);
@@ -16,41 +17,41 @@ async function getAllCoupons(privateKey?: string): Promise<CouponModel[]> {
 // %2F => /
 // %2B => +
 // %3D => =
-async function getCouponPercentage(couponCode: string): Promise<number> {
+async function getCoupon(couponCode: string): Promise<CouponModel> {
     const allCoupons = await getAllCoupons();
     const allCouponsBut = allCoupons.filter(c => c.code !== couponCode);
     // making sure we have that coupon
     if (allCoupons.length === allCouponsBut.length) {
-        throw new IdNotFound(couponCode, "CouponLogic-getCouponPercentage");
+        throw new IdNotFound(couponCode, "CouponLogic-getCoupon");
     }
-    return allCoupons.filter(c => c.code === couponCode)[0].percentage;
+    return allCoupons.filter(c => c.code === couponCode)[0];
 }
 
-async function deleteCoupon(couponCode: string, privateKey: string): Promise<void> {
+async function deleteCoupon(couponId: string, privateKey: string): Promise<void> {
     if (!privateKey) throw new UnauthorizedError("privateKey not provided", "CouponLogic-deleteCoupon");
     const allCoupons = await getAllCoupons();
-    const allCouponsBut = allCoupons.filter(c => encryptionService.rsaDecrypt(c.code, privateKey) !== couponCode);
+    const allCouponsBut = allCoupons.filter(c => c.id !== couponId);
     // making sure we have that coupon
     if (allCoupons.length === allCouponsBut.length) {
-        throw new IdNotFound(couponCode, "CouponLogic-deleteCoupon");
+        throw new IdNotFound(couponId, "CouponLogic-deleteCoupon");
     }
     await dal.writeFile(config.couponsEndpoint, JSON.stringify(allCouponsBut))
     return;
 }
 
-async function updateCoupon(couponCode: string, coupon: CouponModel, privateKey: string): Promise<CouponModel> {
+async function updateCoupon(couponId: string, coupon: CouponModel, privateKey: string): Promise<CouponModel> {
     if (!privateKey) throw new UnauthorizedError("privateKey not provided", "CouponLogic-updateCoupon");
     // verifying given coupon
     const error = coupon.validate();
     if (error) throw new ValidationError(error, "CouponLogic-updateCoupon");
 
     const allCoupons = await getAllCoupons();
-    const allCouponsBut = allCoupons.filter(c => encryptionService.rsaDecrypt(c.code, privateKey) !== couponCode);
+    const allCouponsBut = allCoupons.filter(c => c.id !== couponId);
     // making sure we have that coupon
     if (allCoupons.length === allCouponsBut.length) {
-        throw new IdNotFound(couponCode, "CouponLogic-updateCoupon");
+        throw new IdNotFound(couponId, "CouponLogic-updateCoupon");
     }
-    
+
     const filtered = allCoupons.filter(c => encryptionService.rsaDecrypt(c.code, privateKey) === coupon.code);
     if (filtered.length > 0) {
         throw new ForbiddenError("Cannot have two coupons with the same name.", "CouponLogic-updateCoupon");
@@ -64,6 +65,7 @@ async function updateCoupon(couponCode: string, coupon: CouponModel, privateKey:
 async function addCoupon(coupon: CouponModel, privateKey: string): Promise<CouponModel> {
     if (!privateKey) throw new UnauthorizedError("privateKey not provided", "CouponLogic-addCoupon");
     // verifying given coupon
+    coupon.id = uuid();
     const error = coupon.validate();
     if (error) throw new ValidationError(error, "CouponLogic-addCoupon");
 
@@ -78,10 +80,15 @@ async function addCoupon(coupon: CouponModel, privateKey: string): Promise<Coupo
     return coupon;
 }
 
+function decodePrivateKey(privatekey: string) {
+    return decodeURI(privatekey).replaceAll("%2F", "/").replaceAll("%3D", "=")
+}
+
 export default {
     getAllCoupons,
-    getCouponPercentage,
+    getCoupon,
     deleteCoupon,
     updateCoupon,
-    addCoupon
+    addCoupon,
+    decodePrivateKey
 };
