@@ -1,16 +1,8 @@
+pm2 stop backend
 rm -rf DnA-backend
 git clone https://github.com/TheWizardo/DnA-backend.git
 mkdir DnA-backend/logs
 touch DnA-backend/logs/backend.log
-
-now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] stopping pm2 service" >> DnA-backend/logs/backend.log
-
-pm2 stop backend
-
-now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] pm2 service stopped" >> DnA-backend/logs/backend.log
-
 
 now=$(date +"%Y-%m-%dT%H:%M:%S")
 echo "[$now] deleteing typescript source" >> DnA-backend/logs/backend.log

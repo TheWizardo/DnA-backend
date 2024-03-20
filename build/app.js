@@ -34,8 +34,8 @@ server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
 var sslCreds = {
-    key: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "key.pem")),
-    cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "fullchain.pem")),
-    // ca: fs.readFileSync(`${config.certFilesPath}chain.pem`),
+    key: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "privkey.pem"), "utf-8"),
+    cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "fullchain.pem"), "utf-8"),
+    ca: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "chain.pem"), "utf-8"),
 };
-https_1.default.createServer(server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });
+https_1.default.createServer(sslCreds, server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });

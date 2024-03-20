@@ -7,7 +7,7 @@ var path_1 = __importDefault(require("path"));
 var Config = /** @class */ (function () {
     function Config() {
         this.environment = process.env.NODE_ENV; //"development" || "production";
-        this.port = +process.env.PORT || 3001;
+        this.port = +process.env.PORT || 4272;
         this.dataFolder = path_1.default.resolve(__dirname, "..", "Assets", "data");
         this.imagesFolder = path_1.default.resolve(__dirname, "..", "Assets", "images");
         this.ordersEndpoint = this.dataFolder + "/orders.json";

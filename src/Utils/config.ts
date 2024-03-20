@@ -2,7 +2,7 @@ import path from "path";
 
 class Config {
     public environment = process.env.NODE_ENV; //"development" || "production";
-    public port = +process.env.PORT || 3001;
+    public port = +process.env.PORT || 4272;
     public dataFolder = path.resolve(__dirname, "..", "Assets", "data");
     public imagesFolder = path.resolve(__dirname, "..", "Assets", "images");
     public ordersEndpoint = this.dataFolder + "/orders.json";

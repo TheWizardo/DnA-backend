@@ -34,9 +34,9 @@ server.use("*", routeNotFound);
 server.use(catchAll);
 
 const sslCreds = {
-    key: fs.readFileSync(`${config.certFilesPath}key.pem`),
-    cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`),
-    // ca: fs.readFileSync(`${config.certFilesPath}chain.pem`),
+    key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
+    cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
+    ca: fs.readFileSync(`${config.certFilesPath}chain.pem`, "utf-8"),
 }
 
-https.createServer(server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
+https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
