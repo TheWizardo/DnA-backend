@@ -41,10 +41,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var router = express_1.default.Router();
-router.get("/.well-known/acme-challenge/KF7jNbs934J-qFk9JvFZKLez1gJRz2pgEqtU1DigJKE", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+router.get("/.well-known/acme-challenge/VXqnPhJ1RuRPVUay23ziNUHbIcMslA5taS6NDxXGAVo", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         try {
-            res.json("KF7jNbs934J-qFk9JvFZKLez1gJRz2pgEqtU1DigJKE.X3LI0yNz6RaPBAKgF_ilMA05U7-OlFkeXwqviR_Vzuw");
+            res.send("VXqnPhJ1RuRPVUay23ziNUHbIcMslA5taS6NDxXGAVo.X3LI0yNz6RaPBAKgF_ilMA05U7-OlFkeXwqviR_Vzuw");
         }
         catch (err) {
             next({ error: err, from: "AuthController-Login" });
