@@ -13,6 +13,7 @@ var Config = /** @class */ (function () {
         this.ordersEndpoint = this.dataFolder + "/orders.json";
         this.couponsEndpoint = this.dataFolder + "/coupons.json";
         this.usersEndpoint = this.dataFolder + "/users.json";
+        this.certFilesPath = "/etc/letsencrypt/live/api.demonsandangels.co.il/";
         this.EmailJs = "https://api.emailjs.com/api/v1.0/email/send";
         this.EmailJsUserId = "OEjoskM3upjjVzDsH";
         this.EmailJsServiceId = "demons-and-angels";

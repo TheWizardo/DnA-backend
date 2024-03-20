@@ -17,6 +17,8 @@ var cors_1 = __importDefault(require("cors"));
 var logger_mw_1 = __importDefault(require("./Middleware/logger-mw"));
 var config_1 = __importDefault(require("./Utils/config"));
 var sanitize_1 = __importDefault(require("./Middleware/sanitize"));
+var https_1 = __importDefault(require("https"));
+var fs_1 = __importDefault(require("fs"));
 var server = (0, express_1.default)();
 server.use((0, cors_1.default)());
 server.use("/", (0, express_rate_limit_1.default)({ windowMs: 500, max: 20, message: "Please try again later" }));
@@ -31,5 +33,9 @@ server.use("/api/v1", orders_controller_1.default);
 server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
-server.listen(config_1.default.port, function () { return console.log("Listening on http://localhost:".concat(config_1.default.port)); });
-server.listen(80, function () { return console.log("Listening on http://localhost"); });
+var sslCreds = {
+    key: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "key.pem")),
+    cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "cert.pem")),
+    ca: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "chain.pem")),
+};
+https_1.default.createServer(server).listen(config_1.default.port, function () { return console.log("Listening on http://localhost:".concat(config_1.default.port)); });

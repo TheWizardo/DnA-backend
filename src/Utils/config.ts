@@ -9,6 +9,8 @@ class Config {
     public couponsEndpoint = this.dataFolder + "/coupons.json";
     public usersEndpoint = this.dataFolder + "/users.json";
 
+    public certFilesPath = "/etc/letsencrypt/live/api.demonsandangels.co.il/";
+
     public EmailJs = "https://api.emailjs.com/api/v1.0/email/send";
     public EmailJsUserId = "OEjoskM3upjjVzDsH";
     public EmailJsServiceId = "demons-and-angels";

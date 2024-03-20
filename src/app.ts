@@ -12,6 +12,9 @@ import cors from 'cors';
 import logger from './Middleware/logger-mw';
 import config from './Utils/config';
 import sanitize from './Middleware/sanitize';
+import https from 'https';
+import { options } from 'joi';
+import fs from 'fs';
 
 const server = express();
 
@@ -30,5 +33,10 @@ server.use("/", sslController);
 server.use("*", routeNotFound);
 server.use(catchAll);
 
-server.listen(config.port, () => console.log(`Listening on http://localhost:${config.port}`));
-server.listen(80, () => console.log(`Listening on http://localhost`));
+const sslCreds = {
+    key: fs.readFileSync(`${config.certFilesPath}key.pem`),
+    cert: fs.readFileSync(`${config.certFilesPath}cert.pem`),
+    ca: fs.readFileSync(`${config.certFilesPath}chain.pem`),
+}
+
+https.createServer(server).listen(config.port, () => console.log(`Listening on http://localhost:${config.port}`));
