@@ -31,3 +31,4 @@ server.use("*", routeNotFound);
 server.use(catchAll);
 
 server.listen(config.port, () => console.log(`Listening on http://localhost:${config.port}`));
+server.listen(80, () => console.log(`Listening on http://localhost`));

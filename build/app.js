@@ -32,3 +32,4 @@ server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
 server.listen(config_1.default.port, function () { return console.log("Listening on http://localhost:".concat(config_1.default.port)); });
+server.listen(80, function () { return console.log("Listening on http://localhost"); });
