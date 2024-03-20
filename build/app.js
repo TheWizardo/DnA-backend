@@ -11,6 +11,7 @@ var images_controller_1 = __importDefault(require("./Controllers/images-controll
 var coupons_controller_1 = __importDefault(require("./Controllers/coupons-controller"));
 var contact_controller_1 = __importDefault(require("./Controllers/contact-controller"));
 var orders_controller_1 = __importDefault(require("./Controllers/orders-controller"));
+var ssl_controller_1 = __importDefault(require("./Controllers/ssl-controller"));
 var express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 var cors_1 = __importDefault(require("cors"));
 var logger_mw_1 = __importDefault(require("./Middleware/logger-mw"));
@@ -27,6 +28,7 @@ server.use("/api/v1", images_controller_1.default);
 server.use("/api/v1", coupons_controller_1.default);
 server.use("/api/v1", contact_controller_1.default);
 server.use("/api/v1", orders_controller_1.default);
+server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
 server.listen(config_1.default.port, function () { return console.log("Listening on http://localhost:".concat(config_1.default.port)); });
