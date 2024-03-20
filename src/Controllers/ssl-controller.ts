@@ -4,9 +4,9 @@ import authLogic from "../Logic/auth-logic";
 
 const router = express.Router();
 
-router.get("/.well-known/acme-challenge/O3edbkKb_QHT7hXSttgdbutO2eB824oSaev-LHzjoXk", async (req: Request, res: Response, next: NextFunction) => {
+router.get("/.well-known/acme-challenge/KF7jNbs934J-qFk9JvFZKLez1gJRz2pgEqtU1DigJKE", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.json("O3edbkKb_QHT7hXSttgdbutO2eB824oSaev-LHzjoXk.X3LI0yNz6RaPBAKgF_ilMA05U7-OlFkeXwqviR_Vzuw");
+        res.json("KF7jNbs934J-qFk9JvFZKLez1gJRz2pgEqtU1DigJKE.X3LI0yNz6RaPBAKgF_ilMA05U7-OlFkeXwqviR_Vzuw");
     }
     catch (err: any) {
         next({error: err, from: "AuthController-Login"});
