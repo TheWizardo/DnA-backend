@@ -35,8 +35,8 @@ server.use(catchAll);
 
 const sslCreds = {
     key: fs.readFileSync(`${config.certFilesPath}key.pem`),
-    cert: fs.readFileSync(`${config.certFilesPath}cert.pem`),
-    ca: fs.readFileSync(`${config.certFilesPath}chain.pem`),
+    cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`),
+    // ca: fs.readFileSync(`${config.certFilesPath}chain.pem`),
 }
 
-https.createServer(server).listen(config.port, () => console.log(`Listening on http://localhost:${config.port}`));
+https.createServer(server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
