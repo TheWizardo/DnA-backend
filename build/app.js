@@ -25,11 +25,11 @@ server.use("/", (0, express_rate_limit_1.default)({ windowMs: 500, max: 20, mess
 server.use(express_1.default.json());
 server.use(sanitize_1.default);
 server.use(logger_mw_1.default); ///////////////////////////////////////////////////////////////////////////////////////////////
-server.use("/api/v1", auth_controller_1.default);
-server.use("/api/v1", images_controller_1.default);
-server.use("/api/v1", coupons_controller_1.default);
-server.use("/api/v1", contact_controller_1.default);
-server.use("/api/v1", orders_controller_1.default);
+server.use("/v1", auth_controller_1.default);
+server.use("/v1", images_controller_1.default);
+server.use("/v1", coupons_controller_1.default);
+server.use("/v1", contact_controller_1.default);
+server.use("/v1", orders_controller_1.default);
 server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);

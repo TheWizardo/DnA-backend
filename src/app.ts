@@ -24,11 +24,11 @@ server.use("/", expressRateLimit({windowMs: 500, max: 20, message: "Please try a
 server.use(express.json());
 server.use(sanitize);
 server.use(logger); ///////////////////////////////////////////////////////////////////////////////////////////////
-server.use("/api/v1", authController);
-server.use("/api/v1", imagesController);
-server.use("/api/v1", couponsController);
-server.use("/api/v1", contactController);
-server.use("/api/v1", ordersController);
+server.use("/v1", authController);
+server.use("/v1", imagesController);
+server.use("/v1", couponsController);
+server.use("/v1", contactController);
+server.use("/v1", ordersController);
 server.use("/", sslController);
 server.use("*", routeNotFound);
 server.use(catchAll);
