@@ -13,13 +13,13 @@ import logger from './Middleware/logger-mw';
 import config from './Utils/config';
 import sanitize from './Middleware/sanitize';
 import https from 'https';
-import { options } from 'joi';
+import http from 'http';
 import fs from 'fs';
 
 const server = express();
 
 server.use(cors());
-server.use("/", expressRateLimit({windowMs: 500, max: 20, message: "Please try again later"}));
+server.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
 
 server.use(express.json());
 server.use(sanitize);
@@ -40,3 +40,4 @@ const sslCreds = {
 }
 
 https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
+http.createServer(server).listen(3001, () => console.log(`Listening on port 3001`));

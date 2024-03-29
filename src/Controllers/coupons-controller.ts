@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/coupons", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const allCouponS = await couponsLogic.getAllCoupons(couponsLogic.decodePrivateKey(req.query.privateKey as string));
+        const allCouponS = await couponsLogic.getAllCoupons(true);
         res.json(allCouponS);
     }
     catch (err: any) {
@@ -30,7 +30,7 @@ router.post("/coupons", verify.verifyAdmin, async (req: Request, res: Response, 
         req.body.discount = +req.body.discount;
 
         const coupon = new CouponModel(req.body);
-        const addedCoupon = await couponsLogic.addCoupon(coupon, couponsLogic.decodePrivateKey(req.query.privateKey as string));
+        const addedCoupon = await couponsLogic.addCoupon(coupon);
         res.status(201).json(addedCoupon);
     }
     catch (err: any) {
@@ -40,7 +40,7 @@ router.post("/coupons", verify.verifyAdmin, async (req: Request, res: Response, 
 
 router.delete("/coupons/:id", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-        await couponsLogic.deleteCoupon(req.params.id, couponsLogic.decodePrivateKey(req.query.privateKey as string));
+        await couponsLogic.deleteCoupon(req.params.id);
         res.sendStatus(204);
     }
     catch (err: any) {
@@ -53,7 +53,7 @@ router.put("/coupons/:id", verify.verifyAdmin, async (req: Request, res: Respons
         req.body.discount = +req.body.discount;
 
         const coupon = new CouponModel(req.body);
-        const updatedCoupon = await couponsLogic.updateCoupon(req.params.id, coupon, couponsLogic.decodePrivateKey(req.query.privateKey as string));
+        const updatedCoupon = await couponsLogic.updateCoupon(req.params.id, coupon);
         res.json(updatedCoupon);
     }
     catch (err: any) {
