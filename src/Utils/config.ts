@@ -8,6 +8,7 @@ class Config {
     public ordersEndpoint = this.dataFolder + "/orders.json";
     public couponsEndpoint = this.dataFolder + "/coupons.json";
     public usersEndpoint = this.dataFolder + "/users.json";
+    public publicKey =  path.resolve(__dirname, "..", "Assets", "Key", "publicKey.pem");
 
     public certFilesPath = "/etc/letsencrypt/live/api.demonsandangels.co.il/";
 
