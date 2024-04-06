@@ -44,7 +44,9 @@ var errors_models_1 = require("../Models/errors-models");
 var config_1 = __importDefault(require("../Utils/config"));
 var encryptionService_1 = __importDefault(require("../Services/encryptionService"));
 var uuid_1 = require("uuid");
-function getAllCoupons(privateKey) {
+var conditionService_1 = __importDefault(require("../Services/conditionService"));
+function getAllCoupons(shouldStrip) {
+    if (shouldStrip === void 0) { shouldStrip = false; }
     return __awaiter(this, void 0, void 0, function () {
         var raw_text, coupons;
         return __generator(this, function (_a) {
@@ -53,9 +55,8 @@ function getAllCoupons(privateKey) {
                 case 1:
                     raw_text = _a.sent();
                     coupons = JSON.parse(raw_text);
-                    if (privateKey) {
-                        coupons.map(function (c) { return c.code = encryptionService_1.default.rsaDecrypt(c.code, privateKey); });
-                    }
+                    if (shouldStrip)
+                        return [2 /*return*/, stripSha(coupons)];
                     return [2 /*return*/, coupons];
             }
         });
@@ -64,33 +65,35 @@ function getAllCoupons(privateKey) {
 // %2F => /
 // %2B => +
 // %3D => =
-function getCoupon(couponCode) {
+function getCoupon(couponCode, order) {
     return __awaiter(this, void 0, void 0, function () {
-        var allCoupons, allCouponsBut;
+        var allCoupons, allCouponsBut, selectedCoupon, error;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, getAllCoupons()];
                 case 1:
                     allCoupons = _a.sent();
-                    allCouponsBut = allCoupons.filter(function (c) { return c.code !== couponCode; });
+                    allCouponsBut = allCoupons.filter(function (c) { return encryptionService_1.default.sha256(couponCode) !== extractSha(c); });
                     // making sure we have that coupon
                     if (allCoupons.length === allCouponsBut.length) {
                         throw new errors_models_1.IdNotFound(couponCode, "CouponLogic-getCoupon");
                     }
-                    return [2 /*return*/, allCoupons.filter(function (c) { return c.code === couponCode; })[0]];
+                    selectedCoupon = allCoupons.filter(function (c) { return encryptionService_1.default.sha256(couponCode) === extractSha(c); })[0];
+                    error = conditionService_1.default.validateCouponConditions(selectedCoupon, order);
+                    if (error)
+                        throw new errors_models_1.ValidationError(error, "couponLogic-getCoupon");
+                    delete selectedCoupon.code;
+                    return [2 /*return*/, selectedCoupon];
             }
         });
     });
 }
-function deleteCoupon(couponId, privateKey) {
+function deleteCoupon(couponId) {
     return __awaiter(this, void 0, void 0, function () {
         var allCoupons, allCouponsBut;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    if (!privateKey)
-                        throw new errors_models_1.UnauthorizedError("privateKey not provided", "CouponLogic-deleteCoupon");
-                    return [4 /*yield*/, getAllCoupons()];
+                case 0: return [4 /*yield*/, getAllCoupons()];
                 case 1:
                     allCoupons = _a.sent();
                     allCouponsBut = allCoupons.filter(function (c) { return c.id !== couponId; });
@@ -106,14 +109,12 @@ function deleteCoupon(couponId, privateKey) {
         });
     });
 }
-function updateCoupon(couponId, coupon, privateKey) {
+function updateCoupon(couponId, coupon) {
     return __awaiter(this, void 0, void 0, function () {
         var error, allCoupons, allCouponsBut, filtered;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!privateKey)
-                        throw new errors_models_1.UnauthorizedError("privateKey not provided", "CouponLogic-updateCoupon");
                     error = coupon.validate();
                     if (error)
                         throw new errors_models_1.ValidationError(error, "CouponLogic-updateCoupon");
@@ -125,11 +126,11 @@ function updateCoupon(couponId, coupon, privateKey) {
                     if (allCoupons.length === allCouponsBut.length) {
                         throw new errors_models_1.IdNotFound(couponId, "CouponLogic-updateCoupon");
                     }
-                    filtered = allCoupons.filter(function (c) { return encryptionService_1.default.rsaDecrypt(c.code, privateKey) === coupon.code; });
+                    filtered = allCoupons.filter(function (c) { return encryptionService_1.default.sha256(c.code) === extractSha(c); });
                     if (filtered.length > 0) {
                         throw new errors_models_1.ForbiddenError("Cannot have two coupons with the same name.", "CouponLogic-updateCoupon");
                     }
-                    coupon.code = encryptionService_1.default.rsaEncrypt(coupon.code);
+                    coupon.code = encryptionService_1.default.rsaEncrypt(coupon.code) + encryptionService_1.default.sha256(coupon.code);
                     allCouponsBut.push(coupon);
                     return [4 /*yield*/, dal_1.default.writeFile(config_1.default.couponsEndpoint, JSON.stringify(allCouponsBut))];
                 case 2:
@@ -139,14 +140,12 @@ function updateCoupon(couponId, coupon, privateKey) {
         });
     });
 }
-function addCoupon(coupon, privateKey) {
+function addCoupon(coupon) {
     return __awaiter(this, void 0, void 0, function () {
         var error, allCoupons, filtered;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    if (!privateKey)
-                        throw new errors_models_1.UnauthorizedError("privateKey not provided", "CouponLogic-addCoupon");
                     // verifying given coupon
                     coupon.id = (0, uuid_1.v4)();
                     error = coupon.validate();
@@ -155,11 +154,11 @@ function addCoupon(coupon, privateKey) {
                     return [4 /*yield*/, getAllCoupons()];
                 case 1:
                     allCoupons = _a.sent();
-                    filtered = allCoupons.filter(function (c) { return encryptionService_1.default.rsaDecrypt(c.code, privateKey) === coupon.code; });
+                    filtered = allCoupons.filter(function (c) { return encryptionService_1.default.sha256(coupon.code) === extractSha(c); });
                     if (filtered.length > 0) {
                         throw new errors_models_1.ForbiddenError("Cannot add two coupons with the same code. Were you trying to edit?", "CouponLogic-addCoupon");
                     }
-                    coupon.code = encryptionService_1.default.rsaEncrypt(coupon.code);
+                    coupon.code = encryptionService_1.default.rsaEncrypt(coupon.code) + encryptionService_1.default.sha256(coupon.code);
                     allCoupons.push(coupon);
                     return [4 /*yield*/, dal_1.default.writeFile(config_1.default.couponsEndpoint, JSON.stringify(allCoupons))];
                 case 2:
@@ -169,14 +168,16 @@ function addCoupon(coupon, privateKey) {
         });
     });
 }
-function decodePrivateKey(privatekey) {
-    return decodeURI(privatekey).replaceAll("%2F", "/").replaceAll("%3D", "=");
+function stripSha(coupons) {
+    return coupons.map(function (c) { c.code = c.code.slice(0, c.code.length - 64); return c; });
+}
+function extractSha(coupon) {
+    return coupon.code.slice(coupon.code.length - 64);
 }
 exports.default = {
     getAllCoupons: getAllCoupons,
     getCoupon: getCoupon,
     deleteCoupon: deleteCoupon,
     updateCoupon: updateCoupon,
-    addCoupon: addCoupon,
-    decodePrivateKey: decodePrivateKey
+    addCoupon: addCoupon
 };
