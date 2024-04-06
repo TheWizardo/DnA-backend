@@ -4,6 +4,8 @@ import config from "../Utils/config";
 import CouponModel from "../Models/coupon-model";
 import encryptionService from "../Services/encryptionService";
 import { v4 as uuid } from 'uuid';
+import OrderModel from "../Models/order-model";
+import conditionService from "../Services/conditionService";
 
 async function getAllCoupons(shouldStrip: boolean = false): Promise<CouponModel[]> {
     const raw_text = await dal.readString(config.couponsEndpoint);
@@ -15,7 +17,7 @@ async function getAllCoupons(shouldStrip: boolean = false): Promise<CouponModel[
 // %2F => /
 // %2B => +
 // %3D => =
-async function getCoupon(couponCode: string): Promise<CouponModel> {
+async function getCoupon(couponCode: string, order: OrderModel): Promise<CouponModel> {
     const allCoupons = await getAllCoupons();
     const allCouponsBut = allCoupons.filter(c => encryptionService.sha256(couponCode) !== extractSha(c));
     // making sure we have that coupon
@@ -23,9 +25,9 @@ async function getCoupon(couponCode: string): Promise<CouponModel> {
         throw new IdNotFound(couponCode, "CouponLogic-getCoupon");
     }
     const selectedCoupon = allCoupons.filter(c => encryptionService.sha256(couponCode) === extractSha(c))[0];
+    const error = conditionService.validateCouponConditions(selectedCoupon, order);
+    if (error) throw new ValidationError(error, "couponLogic-getCoupon");
     delete selectedCoupon.code;
-    console.log(couponCode);
-    console.log(selectedCoupon);
     return selectedCoupon;
 }
 

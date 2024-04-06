@@ -15,9 +15,16 @@ router.get("/coupons", verify.verifyAdmin, async (req: Request, res: Response, n
     }
 });
 
-router.get("/coupons/:code", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/coupons/:code", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const order = await couponsLogic.getCoupon(req.params.code);
+        req.body.price = +req.body.price;
+        req.body.amount = +req.body.amount;
+        req.body.street_num = req.body?.street_num ? +req.body?.street_num : undefined;
+        req.body.apartment = req.body?.apartment ? +req.body?.apartment : undefined;
+        req.body.dedicate = req.body?.dedicate === "true" ? true : false;
+        req.body.for_self = req.body?.for_self === "true" ? true : false;
+        
+        const order = await couponsLogic.getCoupon(req.params.code, req.body);
         res.json(order);
     }
     catch (err: any) {
