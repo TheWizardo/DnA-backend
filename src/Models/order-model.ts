@@ -1,8 +1,9 @@
 import Joi from "joi";
+import { ProductType } from "./product-types";
 
 class OrderModel {
     public order_number: string;
-    public type: string;
+    public type: ProductType;
     public time: number;
 
     public first_name: string;
@@ -28,6 +29,29 @@ class OrderModel {
 
     public tracking_number: string;
 
+    public coupon_code: string;
+
+    private static obj: OrderModel = {
+        order_number: null,
+        type: null,
+        time: null,
+        first_name: null,
+        last_name: null,
+        amount: null,
+        phone: null,
+        street: null,
+        street_num: null,
+        apartment: null,
+        city: null,
+        zip: null,
+        email: null,
+        comments: null,
+        price: null,
+        dedication_name: null,
+        tracking_number: null,
+        coupon_code: null,
+        validate: undefined
+    }
 
     public constructor(order: OrderModel) {
         this.order_number = order.order_number;
@@ -47,32 +71,37 @@ class OrderModel {
         this.price = order.price;
         this.dedication_name = order.dedication_name;
         this.tracking_number = order.tracking_number;
+        this.coupon_code = order.coupon_code;
     }
 
     private static validationScheme = Joi.object({
         order_number: Joi.string().optional().length(8),
-        type: Joi.string().required(),
+        type: Joi.string().required().valid(...Object.values(ProductType)),
         time: Joi.number().required().positive(),
         first_name: Joi.string().required().min(2).max(50),
         last_name: Joi.string().required().min(2).max(50),
         amount: Joi.number().positive().integer().required(),
         phone: Joi.string().required().length(10),
-        street: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.string().required(), otherwise: Joi.string().optional() }),
-        street_num: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
-        apartment: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
-        city: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.string().required(), otherwise: Joi.string().optional() }),
-        zip: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.string().length(7).required(), otherwise: Joi.string().optional() }),
+        street: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().required(), otherwise: Joi.string().optional() }),
+        street_num: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
+        apartment: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
+        city: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().required(), otherwise: Joi.string().optional() }),
+        zip: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().length(7).required(), otherwise: Joi.string().optional() }),
         email: Joi.string().email().required(),
         comments: Joi.string().optional().allow(null, ''),
         price: Joi.number().positive(),
-        dedication_name: Joi.alternatives().conditional("type", { is: "PrintedBook", then: Joi.string().required().min(2).max(50), otherwise: Joi.string().optional() }),
-        tracking_number: Joi.string().optional()
+        dedication_name: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().required().min(2).max(50), otherwise: Joi.string().optional() }),
+        tracking_number: Joi.string().optional(),
+        coupon_code: Joi.string().optional()
     });
-
 
     public validate(): string {
         const result = OrderModel.validationScheme.validate(this);
         return result.error?.message;
+    }
+
+    public static GetDefaultObject() {
+        return OrderModel.obj;
     }
 }
 
