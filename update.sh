@@ -38,3 +38,5 @@ now=$(date +"%Y-%m-%dT%H:%M:%S")
 echo "[$now] startinf pm2 service" >> DnA-backend/logs/backend.log
 
 pm2 start
+
+reboot
