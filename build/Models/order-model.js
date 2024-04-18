@@ -17,7 +17,6 @@ var OrderModel = /** @class */ (function () {
         this.phone = order.phone;
         this.street = order.street;
         this.street_num = order.street_num;
-        this.apartment = order.apartment;
         this.city = order.city;
         this.zip = order.zip;
         this.email = order.email;
@@ -45,7 +44,6 @@ var OrderModel = /** @class */ (function () {
         phone: null,
         street: null,
         street_num: null,
-        apartment: null,
         city: null,
         zip: null,
         email: null,
@@ -66,7 +64,6 @@ var OrderModel = /** @class */ (function () {
         phone: joi_1.default.string().required().length(10),
         street: joi_1.default.alternatives().conditional("type", { is: product_types_1.ProductType.printedBook, then: joi_1.default.string().required(), otherwise: joi_1.default.string().optional() }),
         street_num: joi_1.default.alternatives().conditional("type", { is: product_types_1.ProductType.printedBook, then: joi_1.default.number().positive().integer().required(), otherwise: joi_1.default.number().optional() }),
-        apartment: joi_1.default.alternatives().conditional("type", { is: product_types_1.ProductType.printedBook, then: joi_1.default.number().positive().integer().required(), otherwise: joi_1.default.number().optional() }),
         city: joi_1.default.alternatives().conditional("type", { is: product_types_1.ProductType.printedBook, then: joi_1.default.string().required(), otherwise: joi_1.default.string().optional() }),
         zip: joi_1.default.alternatives().conditional("type", { is: product_types_1.ProductType.printedBook, then: joi_1.default.string().length(7).required(), otherwise: joi_1.default.string().optional() }),
         email: joi_1.default.string().email().required(),

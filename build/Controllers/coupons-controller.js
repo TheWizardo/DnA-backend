@@ -65,24 +65,23 @@ router.get("/coupons", verify_user_1.default.verifyAdmin, function (req, res, ne
 }); });
 router.post("/coupons/:code", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var order, err_2;
-    var _a, _b, _c, _d, _e, _f;
-    return __generator(this, function (_g) {
-        switch (_g.label) {
+    var _a, _b, _c, _d;
+    return __generator(this, function (_e) {
+        switch (_e.label) {
             case 0:
-                _g.trys.push([0, 2, , 3]);
+                _e.trys.push([0, 2, , 3]);
                 req.body.price = +req.body.price;
                 req.body.amount = +req.body.amount;
                 req.body.street_num = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.street_num) ? +((_b = req.body) === null || _b === void 0 ? void 0 : _b.street_num) : undefined;
-                req.body.apartment = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.apartment) ? +((_d = req.body) === null || _d === void 0 ? void 0 : _d.apartment) : undefined;
-                req.body.dedicate = ((_e = req.body) === null || _e === void 0 ? void 0 : _e.dedicate) === "true" ? true : false;
-                req.body.for_self = ((_f = req.body) === null || _f === void 0 ? void 0 : _f.for_self) === "true" ? true : false;
+                req.body.dedicate = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.dedicate) === "true" ? true : false;
+                req.body.for_self = ((_d = req.body) === null || _d === void 0 ? void 0 : _d.for_self) === "true" ? true : false;
                 return [4 /*yield*/, coupon_logic_1.default.getCoupon(req.params.code, req.body)];
             case 1:
-                order = _g.sent();
+                order = _e.sent();
                 res.json(order);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _g.sent();
+                err_2 = _e.sent();
                 next({ error: err_2, from: "CouponsController-GetFromCode" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];

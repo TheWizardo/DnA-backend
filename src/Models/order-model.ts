@@ -15,7 +15,6 @@ class OrderModel {
 
     public street: string;
     public street_num: number;
-    public apartment: number;
     public city: string;
     public zip: string;
 
@@ -41,7 +40,6 @@ class OrderModel {
         phone: null,
         street: null,
         street_num: null,
-        apartment: null,
         city: null,
         zip: null,
         email: null,
@@ -63,7 +61,6 @@ class OrderModel {
         this.phone = order.phone;
         this.street = order.street;
         this.street_num = order.street_num;
-        this.apartment = order.apartment;
         this.city = order.city;
         this.zip = order.zip;
         this.email = order.email;
@@ -84,7 +81,6 @@ class OrderModel {
         phone: Joi.string().required().length(10),
         street: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().required(), otherwise: Joi.string().optional() }),
         street_num: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
-        apartment: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.number().positive().integer().required(), otherwise: Joi.number().optional() }),
         city: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().required(), otherwise: Joi.string().optional() }),
         zip: Joi.alternatives().conditional("type", { is: ProductType.printedBook, then: Joi.string().length(7).required(), otherwise: Joi.string().optional() }),
         email: Joi.string().email().required(),

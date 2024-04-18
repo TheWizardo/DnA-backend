@@ -84,25 +84,24 @@ router.get("/orders/:id", function (req, res, next) { return __awaiter(void 0, v
 }); });
 router.post("/orders", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var order, addedOrder, err_3;
-    var _a, _b, _c, _d, _e, _f;
-    return __generator(this, function (_g) {
-        switch (_g.label) {
+    var _a, _b, _c, _d;
+    return __generator(this, function (_e) {
+        switch (_e.label) {
             case 0:
-                _g.trys.push([0, 2, , 3]);
+                _e.trys.push([0, 2, , 3]);
                 req.body.price = +req.body.price;
                 req.body.amount = +req.body.amount;
                 req.body.street_num = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.street_num) ? +((_b = req.body) === null || _b === void 0 ? void 0 : _b.street_num) : undefined;
-                req.body.apartment = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.apartment) ? +((_d = req.body) === null || _d === void 0 ? void 0 : _d.apartment) : undefined;
-                req.body.dedicate = ((_e = req.body) === null || _e === void 0 ? void 0 : _e.dedicate) === "true" ? true : false;
-                req.body.for_self = ((_f = req.body) === null || _f === void 0 ? void 0 : _f.for_self) === "true" ? true : false;
+                req.body.dedicate = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.dedicate) === "true" ? true : false;
+                req.body.for_self = ((_d = req.body) === null || _d === void 0 ? void 0 : _d.for_self) === "true" ? true : false;
                 order = new order_model_1.default(req.body);
                 return [4 /*yield*/, orders_logic_1.default.newOrder(order)];
             case 1:
-                addedOrder = _g.sent();
+                addedOrder = _e.sent();
                 res.status(201).json(addedOrder);
                 return [3 /*break*/, 3];
             case 2:
-                err_3 = _g.sent();
+                err_3 = _e.sent();
                 next({ error: err_3, from: "OrdersController-NewOrder" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -133,7 +132,6 @@ router.get("/orders/search/:phone", function (req, res, next) { return __awaiter
 //         req.body.price = +req.body.price;
 //         req.body.amount = +req.body.amount;
 //         req.body.street_num = req.body?.street_num ? +req.body?.street_num : undefined;
-//         req.body.apartment = req.body?.apartment ? +req.body?.apartment : undefined;
 //         req.body.dedicate = req.body?.dedicate === "true" ? true : false;
 //         req.body.for_self = req.body?.for_self === "true" ? true : false;
 //

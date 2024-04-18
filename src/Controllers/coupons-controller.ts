@@ -20,7 +20,6 @@ router.post("/coupons/:code", async (req: Request, res: Response, next: NextFunc
         req.body.price = +req.body.price;
         req.body.amount = +req.body.amount;
         req.body.street_num = req.body?.street_num ? +req.body?.street_num : undefined;
-        req.body.apartment = req.body?.apartment ? +req.body?.apartment : undefined;
         req.body.dedicate = req.body?.dedicate === "true" ? true : false;
         req.body.for_self = req.body?.for_self === "true" ? true : false;
         
