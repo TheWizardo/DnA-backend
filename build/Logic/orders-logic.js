@@ -145,7 +145,7 @@ function generateUuid() {
 }
 function newOrder(order) {
     return __awaiter(this, void 0, void 0, function () {
-        var error, allOrders, filtered;
+        var error, allOrders;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -156,10 +156,8 @@ function newOrder(order) {
                     return [4 /*yield*/, getAllOrders()];
                 case 1:
                     allOrders = _a.sent();
-                    filtered = allOrders.filter(function (o) { return o.order_number === order.order_number; });
-                    // making sure we have that order
-                    if (filtered.length > 0) {
-                        throw new errors_models_1.ForbiddenError("Cannot have multiple orders with the same Id", "OrdersLogic-newOrder");
+                    while (allOrders.filter(function (o) { return o.order_number === order.order_number; }).length > 0) {
+                        order.order_number = generateUuid();
                     }
                     return [4 /*yield*/, mailService_1.default.sendPurchaseEmail(order)];
                 case 2:

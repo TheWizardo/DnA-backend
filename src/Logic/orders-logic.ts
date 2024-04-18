@@ -76,7 +76,6 @@ function generateUuid(): string {
     }
 
     return transformedUuid;
-
 }
 
 async function newOrder(order: OrderModel): Promise<OrderModel> {
@@ -86,10 +85,8 @@ async function newOrder(order: OrderModel): Promise<OrderModel> {
     if (error) throw new ValidationError(error, "OrdersLogic-newOrder");
 
     const allOrders = await getAllOrders();
-    const filtered = allOrders.filter(o => o.order_number === order.order_number);
-    // making sure we have that order
-    if (filtered.length > 0) {
-        throw new ForbiddenError("Cannot have multiple orders with the same Id", "OrdersLogic-newOrder");
+    while(allOrders.filter(o => o.order_number === order.order_number).length > 0) {
+        order.order_number = generateUuid();
     }
     await mailService.sendPurchaseEmail(order);
     allOrders.push(order);
