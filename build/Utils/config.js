@@ -16,10 +16,10 @@ var Config = /** @class */ (function () {
         this.publicKey = path_1.default.resolve(__dirname, "..", "Assets", "Key", "publicKey.pem");
         this.certFilesPath = "/etc/letsencrypt/live/api.demonsandangels.co.il/";
         this.EmailJs = "https://api.emailjs.com/api/v1.0/email/send";
-        this.EmailJsUserId = "OEjoskM3upjjVzDsH";
-        this.EmailJsServiceId = "demons-and-angels";
-        this.EmailJsContactTemplateId = "template_cfhtu6q";
-        this.EmailJsPurchaseTemplateId = "template_dw1mwas";
+        this.EmailJsUserId = "H9rn7GTghDk4HNmXP";
+        this.EmailJsServiceId = "service_ktckf8a";
+        this.EmailJsContactTemplateId = "template_8d6mkgg";
+        this.EmailJsPurchaseTemplateId = "template_0gmbv7p";
     }
     return Config;
 }());
