@@ -12,10 +12,10 @@ echo "[$now] typescript source deleted" >> DnA-backend/logs/backend.log
 
 
 now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] changing log files permissions" >> DnA-backend/logs/backend.log
+echo "[$now] changing file permissions" >> DnA-backend/logs/backend.log
 chmod 666 DnA-backend/logs/backend.log
 now=$(date +"%Y-%m-%dT%H:%M:%S")
-echo "[$now] log files permissions chnaged" >> DnA-backend/logs/backend.log
+echo "[$now] file permissions changed" >> DnA-backend/logs/backend.log
 
 for file in "DnA-backend/build/Assets/data"/*; do
     # Check if the file exists and is a regular file
