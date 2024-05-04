@@ -13,10 +13,10 @@ class Config {
     public certFilesPath = "/etc/letsencrypt/live/api.demonsandangels.co.il/";
 
     public EmailJs = "https://api.emailjs.com/api/v1.0/email/send";
-    public EmailJsUserId = "OEjoskM3upjjVzDsH";
-    public EmailJsServiceId = "demons-and-angels";
-    public EmailJsContactTemplateId = "template_cfhtu6q";
-    public EmailJsPurchaseTemplateId = "template_dw1mwas";
+    public EmailJsUserId = "H9rn7GTghDk4HNmXP";
+    public EmailJsServiceId = "service_ktckf8a";
+    public EmailJsContactTemplateId = "template_8d6mkgg";
+    public EmailJsPurchaseTemplateId = "template_0gmbv7p";
 }
 
 const config = new Config();
