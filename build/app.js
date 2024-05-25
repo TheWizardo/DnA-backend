@@ -45,5 +45,5 @@ var sslCreds = {
     key: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "privkey.pem"), "utf-8"),
     cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "fullchain.pem"), "utf-8"),
 };
-https_1.default.createServer(sslCreds, server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });
-http_1.default.createServer(sslChallenge).listen(58080, function () { return console.log("Listening for the acme challenge"); });
+https_1.default.createServer(sslCreds, server).listen(config_1.default.httpsPort, function () { return console.log("Listening on port ".concat(config_1.default.httpsPort)); });
+http_1.default.createServer(sslChallenge).listen(config_1.default.httpPort, function () { return console.log("Listening for the acme challenge on port ".concat(config_1.default.httpPort)); });

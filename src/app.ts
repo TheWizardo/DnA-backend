@@ -46,5 +46,5 @@ const sslCreds = {
     cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
 }
 
-https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
-http.createServer(sslChallenge).listen(58080, () => console.log(`Listening for the acme challenge`));
+https.createServer(sslCreds, server).listen(config.httpsPort, () => console.log(`Listening on port ${config.httpsPort}`));
+http.createServer(sslChallenge).listen(config.httpPort, () => console.log(`Listening for the acme challenge on port ${config.httpPort}`));
