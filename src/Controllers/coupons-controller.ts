@@ -23,8 +23,8 @@ router.post("/coupons/:code", async (req: Request, res: Response, next: NextFunc
         req.body.dedicate = req.body?.dedicate === "true" ? true : false;
         req.body.for_self = req.body?.for_self === "true" ? true : false;
         
-        const order = await couponsLogic.getCoupon(req.params.code, req.body);
-        res.json(order);
+        const coupon = await couponsLogic.getCoupon(req.params.code, req.body);
+        res.json(coupon);
     }
     catch (err: any) {
         next({error: err, from: "CouponsController-GetFromCode"});

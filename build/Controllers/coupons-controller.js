@@ -64,7 +64,7 @@ router.get("/coupons", verify_user_1.default.verifyAdmin, function (req, res, ne
     });
 }); });
 router.post("/coupons/:code", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var order, err_2;
+    var coupon, err_2;
     var _a, _b, _c, _d;
     return __generator(this, function (_e) {
         switch (_e.label) {
@@ -77,8 +77,8 @@ router.post("/coupons/:code", function (req, res, next) { return __awaiter(void 
                 req.body.for_self = ((_d = req.body) === null || _d === void 0 ? void 0 : _d.for_self) === "true" ? true : false;
                 return [4 /*yield*/, coupon_logic_1.default.getCoupon(req.params.code, req.body)];
             case 1:
-                order = _e.sent();
-                res.json(order);
+                coupon = _e.sent();
+                res.json(coupon);
                 return [3 /*break*/, 3];
             case 2:
                 err_2 = _e.sent();
