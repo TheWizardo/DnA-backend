@@ -1,0 +1,19 @@
+{
+  "addressBaseAPI": "https://data.gov.il/api/3/action/datastore_search?resource_id",
+  "audio_discounted_amount": 999,
+  "audio_price": 999,
+  "citiesAPIsuffix": "=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500",
+  "epub_discounted_amount": 37,
+  "epub_price": 37,
+  "max_physical": 5,
+  "local_phone": "0527208555",
+  "international_phone": "972527208555",
+  "pdf_discounted_amount": 37,
+  "pdf_price": 37,
+  "physical_discounted_amount": 78,
+  "physical_price": 78,
+  "shipment_cost": 21,
+  "shipment_cost_base": 21,
+  "showBanner": false,
+  "streetsAPIsuffix": "=9ad3862c-8391-4b2f-84a4-2d4c68625f4b&limit=10000"
+}

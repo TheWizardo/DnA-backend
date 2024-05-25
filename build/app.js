@@ -12,13 +12,13 @@ var coupons_controller_1 = __importDefault(require("./Controllers/coupons-contro
 var contact_controller_1 = __importDefault(require("./Controllers/contact-controller"));
 var orders_controller_1 = __importDefault(require("./Controllers/orders-controller"));
 var ssl_controller_1 = __importDefault(require("./Controllers/ssl-controller"));
+var config_controller_1 = __importDefault(require("./Controllers/config-controller"));
 var express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 var cors_1 = __importDefault(require("cors"));
 var logger_mw_1 = __importDefault(require("./Middleware/logger-mw"));
 var config_1 = __importDefault(require("./Utils/config"));
 var sanitize_1 = __importDefault(require("./Middleware/sanitize"));
-var https_1 = __importDefault(require("https"));
-// import http from 'http';
+var http_1 = __importDefault(require("http"));
 var fs_1 = __importDefault(require("fs"));
 var server = (0, express_1.default)();
 server.use((0, cors_1.default)());
@@ -31,6 +31,7 @@ server.use("/api/v1", images_controller_1.default);
 server.use("/api/v1", coupons_controller_1.default);
 server.use("/api/v1", contact_controller_1.default);
 server.use("/api/v1", orders_controller_1.default);
+server.use("/api/v1", config_controller_1.default);
 server.use("/", ssl_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
@@ -39,5 +40,5 @@ var sslCreds = {
     cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "fullchain.pem"), "utf-8"),
     ca: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "chain.pem"), "utf-8"),
 };
-https_1.default.createServer(sslCreds, server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });
-// http.createServer(server).listen(3001, () => console.log(`Listening on port 3001 FOR TESTING ONLY`));
+// https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
+http_1.default.createServer(server).listen(3001, function () { return console.log("Listening on port 3001 FOR TESTING ONLY"); });
