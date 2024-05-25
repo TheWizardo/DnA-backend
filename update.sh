@@ -1,4 +1,7 @@
 pm2 stop backend
+
+# copy data files to a temp folder.
+
 rm -rf DnA-backend
 git clone https://github.com/TheWizardo/DnA-backend.git
 mkdir DnA-backend/logs
@@ -16,6 +19,9 @@ echo "[$now] changing file permissions" >> DnA-backend/logs/backend.log
 chmod 666 DnA-backend/logs/backend.log
 now=$(date +"%Y-%m-%dT%H:%M:%S")
 echo "[$now] file permissions changed" >> DnA-backend/logs/backend.log
+
+# copy the files bac to the data folder
+# delete temp
 
 for file in "DnA-backend/build/Assets/data"/*; do
     # Check if the file exists and is a regular file
