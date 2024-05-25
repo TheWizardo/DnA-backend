@@ -2,6 +2,7 @@
   "addressBaseAPI": "https://data.gov.il/api/3/action/datastore_search?resource_id",
   "audio_discounted_amount": 999,
   "audio_price": 999,
+  "banner_message": "",
   "citiesAPIsuffix": "=d4901968-dad3-4845-a9b0-a57d027f11ab&limit=1500",
   "epub_discounted_amount": 37,
   "epub_price": 37,
