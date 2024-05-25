@@ -18,7 +18,7 @@ var cors_1 = __importDefault(require("cors"));
 var logger_mw_1 = __importDefault(require("./Middleware/logger-mw"));
 var config_1 = __importDefault(require("./Utils/config"));
 var sanitize_1 = __importDefault(require("./Middleware/sanitize"));
-var http_1 = __importDefault(require("http"));
+var https_1 = __importDefault(require("https"));
 var fs_1 = __importDefault(require("fs"));
 var server = (0, express_1.default)();
 server.use((0, cors_1.default)());
@@ -40,5 +40,5 @@ var sslCreds = {
     cert: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "fullchain.pem"), "utf-8"),
     ca: fs_1.default.readFileSync("".concat(config_1.default.certFilesPath, "chain.pem"), "utf-8"),
 };
-// https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
-http_1.default.createServer(server).listen(3001, function () { return console.log("Listening on port 3001 FOR TESTING ONLY"); });
+https_1.default.createServer(sslCreds, server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });
+// http.createServer(server).listen(3001, () => console.log(`Listening on port 3001 FOR TESTING ONLY`));

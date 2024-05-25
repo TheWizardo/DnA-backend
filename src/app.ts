@@ -41,5 +41,5 @@ const sslCreds = {
     ca: fs.readFileSync(`${config.certFilesPath}chain.pem`, "utf-8"),
 }
 
-// https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
-http.createServer(server).listen(3001, () => console.log(`Listening on port 3001 FOR TESTING ONLY`));
+https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
+// http.createServer(server).listen(3001, () => console.log(`Listening on port 3001 FOR TESTING ONLY`));
