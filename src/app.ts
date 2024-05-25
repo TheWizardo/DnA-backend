@@ -18,9 +18,12 @@ import http from 'http';
 import fs from 'fs';
 
 const server = express();
+const sslChallenge = express()
 
 server.use(cors());
+sslChallenge.use(cors());
 server.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
+sslChallenge.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
 
 server.use(express.json());
 server.use(sanitize);
@@ -31,9 +34,12 @@ server.use("/api/v1", couponsController);
 server.use("/api/v1", contactController);
 server.use("/api/v1", ordersController);
 server.use("/api/v1", configController);
-server.use("/", sslController);
 server.use("*", routeNotFound);
 server.use(catchAll);
+
+sslChallenge.use("/", sslController);
+sslChallenge.use("*", routeNotFound);
+sslChallenge.use(catchAll);
 
 const sslCreds = {
     key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
@@ -42,4 +48,4 @@ const sslCreds = {
 }
 
 https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
-// http.createServer(server).listen(3001, () => console.log(`Listening on port 3001 FOR TESTING ONLY`));
+http.createServer(sslChallenge).listen(80, () => console.log(`Listening for the acme challenge`));
