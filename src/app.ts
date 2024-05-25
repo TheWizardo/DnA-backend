@@ -44,8 +44,7 @@ sslChallenge.use(catchAll);
 const sslCreds = {
     key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
     cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
-    ca: fs.readFileSync(`${config.certFilesPath}chain.pem`, "utf-8"),
 }
 
 https.createServer(sslCreds, server).listen(config.port, () => console.log(`Listening on port ${config.port}`));
-http.createServer(sslChallenge).listen(80, () => console.log(`Listening for the acme challenge`));
+http.createServer(sslChallenge).listen(58080, () => console.log(`Listening for the acme challenge`));
