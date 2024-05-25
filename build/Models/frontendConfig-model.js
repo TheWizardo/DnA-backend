@@ -6,10 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var joi_1 = __importDefault(require("joi"));
 var FrontendConfig = /** @class */ (function () {
     function FrontendConfig(c) {
-        this.addressBaseAPI = c.addressBaseAPI;
         this.audio_discounted_amount = c.audio_discounted_amount;
         this.audio_price = c.audio_price;
-        this.citiesAPIsuffix = c.citiesAPIsuffix;
         this.epub_discounted_amount = c.epub_discounted_amount;
         this.epub_price = c.epub_price;
         this.max_physical = c.max_physical;
@@ -22,7 +20,6 @@ var FrontendConfig = /** @class */ (function () {
         this.shipment_cost = c.shipment_cost;
         this.shipment_cost_base = c.shipment_cost_base;
         this.showBanner = c.showBanner;
-        this.streetsAPIsuffix = c.streetsAPIsuffix;
         this.banner_message = c.banner_message;
     }
     FrontendConfig.prototype.validate = function () {
@@ -43,9 +40,6 @@ var FrontendConfig = /** @class */ (function () {
         pdf_discounted_amount: joi_1.default.number().required().integer().positive().max(joi_1.default.ref('pdf_price')),
         max_physical: joi_1.default.number().required().integer().positive().max(10),
         showBanner: joi_1.default.boolean().required(),
-        addressBaseAPI: joi_1.default.string().required(),
-        citiesAPIsuffix: joi_1.default.string().required(),
-        streetsAPIsuffix: joi_1.default.string().required(),
         local_phone: joi_1.default.string().required().length(10),
         international_phone: joi_1.default.string().required().length(12),
         banner_message: joi_1.default.string().optional(),

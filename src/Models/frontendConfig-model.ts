@@ -18,18 +18,12 @@ class FrontendConfig {
   public local_phone: string
   public international_phone: string ;
 
-  public addressBaseAPI: string;
-  public citiesAPIsuffix: string;
-  public streetsAPIsuffix: string;
-
   public showBanner: boolean;
   public banner_message: string;
 
   public constructor(c: FrontendConfig) {
-    this.addressBaseAPI = c.addressBaseAPI;
     this.audio_discounted_amount = c.audio_discounted_amount;
     this.audio_price = c.audio_price;
-    this.citiesAPIsuffix = c.citiesAPIsuffix;
     this.epub_discounted_amount = c.epub_discounted_amount;
     this.epub_price = c.epub_price;
     this.max_physical = c.max_physical;
@@ -42,7 +36,6 @@ class FrontendConfig {
     this.shipment_cost = c.shipment_cost;
     this.shipment_cost_base = c.shipment_cost_base;
     this.showBanner = c.showBanner;
-    this.streetsAPIsuffix = c.streetsAPIsuffix;
     this.banner_message = c.banner_message;
   }
 
@@ -59,9 +52,6 @@ class FrontendConfig {
     pdf_discounted_amount: Joi.number().required().integer().positive().max(Joi.ref('pdf_price')),
     max_physical: Joi.number().required().integer().positive().max(10),
     showBanner: Joi.boolean().required(),
-    addressBaseAPI: Joi.string().required(),
-    citiesAPIsuffix: Joi.string().required(),
-    streetsAPIsuffix: Joi.string().required(),
     local_phone: Joi.string().required().length(10),
     international_phone: Joi.string().required().length(12),
     banner_message: Joi.string().optional(),
