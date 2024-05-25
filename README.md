@@ -16,6 +16,7 @@ Settings can be viewd and edited in the ```ecosystem.config.js``` file.
 1. Running the command ```certbot certonly --manual``` will propmt a challenge certbot needs to verify.
    - The challenge will most likely be to receive a certain text when acessing a certain path. if so, notice that ```res.json("text")``` will send ```text``` as a string whereas ```res.send("text")``` will send it as plain text. use ```res.send```.
    - This challlenge is verified on HTTP, so make sure port 80 is open in the instance inbound rules.
+   - To forward port 80 to any other port, use the command ```iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports <PORT>```
    - Pressing Enter will trigger the verification process, so upload and apply all the changes beforehand.
 2. Upon completion, certbot will generate 4 files ```privkey.pem, cert.pem, chain.pem, fullchain.pem``` (usually located at ```/etc/letsencrypt/live/<domain-name>```).
 ### Integration
