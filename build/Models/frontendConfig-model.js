@@ -23,6 +23,7 @@ var FrontendConfig = /** @class */ (function () {
         this.shipment_cost_base = c.shipment_cost_base;
         this.showBanner = c.showBanner;
         this.streetsAPIsuffix = c.streetsAPIsuffix;
+        this.bannerMessage = c.bannerMessage;
     }
     FrontendConfig.prototype.validate = function () {
         var _a;
@@ -45,8 +46,9 @@ var FrontendConfig = /** @class */ (function () {
         addressBaseAPI: joi_1.default.string().required(),
         citiesAPIsuffix: joi_1.default.string().required(),
         streetsAPIsuffix: joi_1.default.string().required(),
-        local_phone: joi_1.default.string().required(),
-        international_phone: joi_1.default.string().required(),
+        local_phone: joi_1.default.string().required().length(10),
+        international_phone: joi_1.default.string().required().length(12),
+        bannerMessage: joi_1.default.string().optional(),
     });
     return FrontendConfig;
 }());

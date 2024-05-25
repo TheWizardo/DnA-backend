@@ -23,6 +23,7 @@ class FrontendConfig {
   public streetsAPIsuffix: string;
 
   public showBanner: boolean;
+  public bannerMessage: string;
 
   public constructor(c: FrontendConfig) {
     this.addressBaseAPI = c.addressBaseAPI;
@@ -42,6 +43,7 @@ class FrontendConfig {
     this.shipment_cost_base = c.shipment_cost_base;
     this.showBanner = c.showBanner;
     this.streetsAPIsuffix = c.streetsAPIsuffix;
+    this.bannerMessage = c.bannerMessage;
   }
 
   private static validationScheme = Joi.object({
@@ -60,8 +62,9 @@ class FrontendConfig {
     addressBaseAPI: Joi.string().required(),
     citiesAPIsuffix: Joi.string().required(),
     streetsAPIsuffix: Joi.string().required(),
-    local_phone: Joi.string().required(),
-    international_phone: Joi.string().required(),
+    local_phone: Joi.string().required().length(10),
+    international_phone: Joi.string().required().length(12),
+    bannerMessage: Joi.string().optional(),
   });
 
   public validate(): string {
