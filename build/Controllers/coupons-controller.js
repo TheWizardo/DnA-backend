@@ -65,23 +65,23 @@ router.get("/coupons", verify_user_1.default.verifyAdmin, function (req, res, ne
 }); });
 router.post("/coupons/:code", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var coupon, err_2;
-    var _a, _b, _c, _d;
-    return __generator(this, function (_e) {
-        switch (_e.label) {
+    var _a, _b, _c, _d, _e, _f;
+    return __generator(this, function (_g) {
+        switch (_g.label) {
             case 0:
-                _e.trys.push([0, 2, , 3]);
+                _g.trys.push([0, 2, , 3]);
                 req.body.price = +req.body.price;
                 req.body.amount = +req.body.amount;
                 req.body.street_num = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.street_num) ? +((_b = req.body) === null || _b === void 0 ? void 0 : _b.street_num) : undefined;
-                req.body.dedicate = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.dedicate) === "true" ? true : false;
-                req.body.for_self = ((_d = req.body) === null || _d === void 0 ? void 0 : _d.for_self) === "true" ? true : false;
+                req.body.dedicate = ((_c = req.body) === null || _c === void 0 ? void 0 : _c.dedicate) || ((_d = req.body) === null || _d === void 0 ? void 0 : _d.dedicate) === "true" ? true : false;
+                req.body.for_self = ((_e = req.body) === null || _e === void 0 ? void 0 : _e.for_self) || ((_f = req.body) === null || _f === void 0 ? void 0 : _f.for_self) === "true" ? true : false;
                 return [4 /*yield*/, coupon_logic_1.default.getCoupon(req.params.code, req.body)];
             case 1:
-                coupon = _e.sent();
+                coupon = _g.sent();
                 res.json(coupon);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _e.sent();
+                err_2 = _g.sent();
                 next({ error: err_2, from: "CouponsController-GetFromCode" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];

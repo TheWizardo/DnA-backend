@@ -15,7 +15,7 @@ router.get("/config", async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
-router.post("/config", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
+router.put("/config", verify.verifyAdmin, async (req: Request, res: Response, next: NextFunction) => {
     try {
         req.body.shipment_cost_base = +req.body.shipment_cost_base;
         req.body.physical_price = +req.body.physical_price;
@@ -30,7 +30,7 @@ router.post("/config", verify.verifyAdmin, async (req: Request, res: Response, n
         req.body.max_physical = +req.body?.max_physical;
         req.body.audio_price = +req.body?.audio_price;
         req.body.audio_price = +req.body?.audio_price;
-        req.body.showBanner = req.body?.showBanner === "true" ? true : false;
+        req.body.showBanner = req.body?.showBanner || req.body?.showBanner === "true" ? true : false;
         const frontConf = new FrontendConfig(req.body);
 
         const conf = await configLogic.updateConfig(frontConf);

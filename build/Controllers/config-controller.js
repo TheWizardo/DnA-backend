@@ -63,13 +63,13 @@ router.get("/config", function (req, res, next) { return __awaiter(void 0, void 
         }
     });
 }); });
-router.post("/config", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+router.put("/config", verify_user_1.default.verifyAdmin, function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var frontConf, conf, err_2;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
-    return __generator(this, function (_o) {
-        switch (_o.label) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+    return __generator(this, function (_p) {
+        switch (_p.label) {
             case 0:
-                _o.trys.push([0, 2, , 3]);
+                _p.trys.push([0, 2, , 3]);
                 req.body.shipment_cost_base = +req.body.shipment_cost_base;
                 req.body.physical_price = +req.body.physical_price;
                 req.body.audio_price = +((_a = req.body) === null || _a === void 0 ? void 0 : _a.audio_price);
@@ -83,15 +83,15 @@ router.post("/config", verify_user_1.default.verifyAdmin, function (req, res, ne
                 req.body.max_physical = +((_j = req.body) === null || _j === void 0 ? void 0 : _j.max_physical);
                 req.body.audio_price = +((_k = req.body) === null || _k === void 0 ? void 0 : _k.audio_price);
                 req.body.audio_price = +((_l = req.body) === null || _l === void 0 ? void 0 : _l.audio_price);
-                req.body.showBanner = ((_m = req.body) === null || _m === void 0 ? void 0 : _m.showBanner) === "true" ? true : false;
+                req.body.showBanner = ((_m = req.body) === null || _m === void 0 ? void 0 : _m.showBanner) || ((_o = req.body) === null || _o === void 0 ? void 0 : _o.showBanner) === "true" ? true : false;
                 frontConf = new frontendConfig_model_1.default(req.body);
                 return [4 /*yield*/, config_logic_1.default.updateConfig(frontConf)];
             case 1:
-                conf = _o.sent();
+                conf = _p.sent();
                 res.json(conf);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _o.sent();
+                err_2 = _p.sent();
                 next({ error: err_2, from: "ConfigController-UpdateConfig" });
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
