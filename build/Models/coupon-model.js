@@ -35,7 +35,7 @@ var CouponModel = /** @class */ (function () {
     };
     CouponModel.validationScheme = joi_1.default.object({
         id: joi_1.default.string().uuid(),
-        code: joi_1.default.string().required(),
+        code: joi_1.default.string().uppercase().required(),
         type: joi_1.default.string().required(),
         discount: joi_1.default.number().required().greater(-1).integer().max(100),
         conditions: joi_1.default.required()

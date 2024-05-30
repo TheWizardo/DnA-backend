@@ -33,7 +33,7 @@ class CouponModel {
 
     private static validationScheme = Joi.object({
         id: Joi.string().uuid(),
-        code: Joi.string().required(),
+        code: Joi.string().uppercase().required(),
         type: Joi.string().required(),
         discount: Joi.number().required().greater(-1).integer().max(100),
         conditions: Joi.required()
