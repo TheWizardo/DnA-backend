@@ -54,7 +54,7 @@ class FrontendConfig {
     showBanner: Joi.boolean().required(),
     local_phone: Joi.string().required().length(10),
     international_phone: Joi.string().required().length(12),
-    banner_message: Joi.string().optional(),
+    banner_message: Joi.string().optional().allow(""),
   });
 
   public validate(): string {

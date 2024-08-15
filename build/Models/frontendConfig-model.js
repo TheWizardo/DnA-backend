@@ -42,7 +42,7 @@ var FrontendConfig = /** @class */ (function () {
         showBanner: joi_1.default.boolean().required(),
         local_phone: joi_1.default.string().required().length(10),
         international_phone: joi_1.default.string().required().length(12),
-        banner_message: joi_1.default.string().optional(),
+        banner_message: joi_1.default.string().optional().allow(""),
     });
     return FrontendConfig;
 }());
