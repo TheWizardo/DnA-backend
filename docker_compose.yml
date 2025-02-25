@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  node_app:
+    build: .
+    container_name: node_app
+    # "expose" is used to make the container reachable INSIDE the Docker network.
+    # We'll not publish port 4272 directly to the host.
+    expose:
+      - "4272"
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      # Add any additional environment variables your app needs
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy_proxy
+    restart: unless-stopped
+
+    # Bind host ports 80 (HTTP) and 443 (HTTPS) to Caddy
+    ports:
+      - "80:80"
+      - "443:443"
+
+    # Provide the Caddyfile from our project directory
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Named volumes for Caddy's data (certs) and config. This persists
+      # across container restarts, so certificates aren't lost.
+      - caddy_data:/data
+      - caddy_config:/config
+
+    # Ensure Caddy starts AFTER node_app is up
+    depends_on:
+      - node_app
+
+volumes:
+  # Named volumes for persisting Caddy data (certificates, etc.)
+  caddy_data:
+  caddy_config:
