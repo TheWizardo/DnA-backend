@@ -1,0 +1,5 @@
+# Caddyfile
+api.demonsandangels.co.il {
+    # Proxy all requests to your NodeJS application
+    reverse_proxy node_app:4272
+}
