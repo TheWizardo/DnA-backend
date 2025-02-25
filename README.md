@@ -23,7 +23,7 @@ Settings can be viewed and edited in the ```ecosystem.config.js``` file.
    - This challenge is verified on HTTP, so make sure port 80 is open in the instance inbound rules.
    - To forward port 80 to any other port, use the command ```iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports <PORT>```
    - Pressing Enter will trigger the verification process, so upload and apply all the changes beforehand.
-2. Upon completion, certbot will generate 4 files ```privkey.pem, cert.pem, chain.pem, fullchain.pem``` (usually located at ```/etc/letsencrypt/live/<domain-name>```).
+2. Upon completion, certbot will generate 4 files ```privkey.pem, cert.pem, chain.pem, fullchain.pem``` (usually located at ```/etc/letsencrypt/live/<domain-name>```). Where ```fullchain.pem``` is just a concatination of ```cert.pem``` followed by ```chain.pem```.
 ### Integration
 The four files created by certbot are actully symbolic links (symlinks) to the actual files.
 <br />
