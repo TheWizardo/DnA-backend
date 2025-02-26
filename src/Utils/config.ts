@@ -2,8 +2,7 @@ import path from "path";
 
 class Config {
     public environment = process.env.NODE_ENV; //"development" || "production";
-    public httpsPort = +process.env.HTTPS_PORT || 4272;
-    public httpPort = +process.env.HTTP_PORT || 8080;
+    public port = +process.env.PORT || 4272;
 
     public dataFolder = path.resolve(__dirname, "..", "Assets", "data");
     public imagesFolder = path.resolve(__dirname, "..", "Assets", "images");

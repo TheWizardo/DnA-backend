@@ -11,22 +11,16 @@ var images_controller_1 = __importDefault(require("./Controllers/images-controll
 var coupons_controller_1 = __importDefault(require("./Controllers/coupons-controller"));
 var contact_controller_1 = __importDefault(require("./Controllers/contact-controller"));
 var orders_controller_1 = __importDefault(require("./Controllers/orders-controller"));
-// import sslController from './Controllers/ssl-controller';
 var config_controller_1 = __importDefault(require("./Controllers/config-controller"));
 var express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 var cors_1 = __importDefault(require("cors"));
 var logger_mw_1 = __importDefault(require("./Middleware/logger-mw"));
 var config_1 = __importDefault(require("./Utils/config"));
 var sanitize_1 = __importDefault(require("./Middleware/sanitize"));
-// import https from 'https';
 var http_1 = __importDefault(require("http"));
-// import fs from 'fs';
 var server = (0, express_1.default)();
-// const sslChallenge = express()
 server.use((0, cors_1.default)());
-// sslChallenge.use(cors());
 server.use("/", (0, express_rate_limit_1.default)({ windowMs: 500, max: 20, message: "Please try again later" }));
-// sslChallenge.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
 server.use(express_1.default.json());
 server.use(sanitize_1.default);
 server.use(logger_mw_1.default); ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,13 +32,18 @@ server.use("/api/v1", orders_controller_1.default);
 server.use("/api/v1", config_controller_1.default);
 server.use("*", route_not_found_1.default);
 server.use(catch_all_1.default);
-// sslChallenge.use("/", sslController);
-// sslChallenge.use("*", routeNotFound);
-// sslChallenge.use(catchAll);
-// const sslCreds = {
-//     key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
-//     cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
-// }
-// https.createServer(sslCreds, server).listen(config.httpsPort, () => console.log(`Listening on port ${config.httpsPort}`));
-// http.createServer(sslChallenge).listen(config.httpPort, () => console.log(`Listening for the acme challenge on port ${config.httpPort}`));
-http_1.default.createServer(server).listen(config_1.default.httpsPort, function () { return console.log("Listening on port ".concat(config_1.default.httpsPort)); });
+var httpServer = http_1.default.createServer(server).listen(config_1.default.port, function () { return console.log("Listening on port ".concat(config_1.default.port)); });
+function shutdown() {
+    console.log('Received kill signal, shutting down gracefully...');
+    httpServer.close(function () {
+        console.log('Closed out remaining connections.');
+        process.exit(0);
+    });
+    // If after 5 seconds it still hasn't exited, force it
+    setTimeout(function () {
+        console.error('Could not close connections in time, forcefully shutting down');
+        process.exit(1);
+    }, 5000);
+}
+// Listen for TERM signal (e.g., Docker stop)
+process.on('SIGTERM', shutdown);
