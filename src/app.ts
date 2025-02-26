@@ -6,24 +6,24 @@ import imagesController from './Controllers/images-controller';
 import couponsController from './Controllers/coupons-controller';
 import contactController from './Controllers/contact-controller';
 import ordersController from './Controllers/orders-controller';
-import sslController from './Controllers/ssl-controller';
+// import sslController from './Controllers/ssl-controller';
 import configController from './Controllers/config-controller';
 import expressRateLimit from 'express-rate-limit';
 import cors from 'cors';
 import logger from './Middleware/logger-mw';
 import config from './Utils/config';
 import sanitize from './Middleware/sanitize';
-import https from 'https';
+// import https from 'https';
 import http from 'http';
-import fs from 'fs';
+// import fs from 'fs';
 
 const server = express();
-const sslChallenge = express()
+// const sslChallenge = express()
 
 server.use(cors());
-sslChallenge.use(cors());
+// sslChallenge.use(cors());
 server.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
-sslChallenge.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
+// sslChallenge.use("/", expressRateLimit({ windowMs: 500, max: 20, message: "Please try again later" }));
 
 server.use(express.json());
 server.use(sanitize);
@@ -37,14 +37,15 @@ server.use("/api/v1", configController);
 server.use("*", routeNotFound);
 server.use(catchAll);
 
-sslChallenge.use("/", sslController);
-sslChallenge.use("*", routeNotFound);
-sslChallenge.use(catchAll);
+// sslChallenge.use("/", sslController);
+// sslChallenge.use("*", routeNotFound);
+// sslChallenge.use(catchAll);
 
-const sslCreds = {
-    key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
-    cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
-}
+// const sslCreds = {
+//     key: fs.readFileSync(`${config.certFilesPath}privkey.pem`, "utf-8"),
+//     cert: fs.readFileSync(`${config.certFilesPath}fullchain.pem`, "utf-8"),
+// }
 
-https.createServer(sslCreds, server).listen(config.httpsPort, () => console.log(`Listening on port ${config.httpsPort}`));
-http.createServer(sslChallenge).listen(config.httpPort, () => console.log(`Listening for the acme challenge on port ${config.httpPort}`));
+// https.createServer(sslCreds, server).listen(config.httpsPort, () => console.log(`Listening on port ${config.httpsPort}`));
+// http.createServer(sslChallenge).listen(config.httpPort, () => console.log(`Listening for the acme challenge on port ${config.httpPort}`));
+http.createServer(server).listen(config.httpsPort, () => console.log(`Listening on port ${config.httpsPort}`));

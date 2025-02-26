@@ -1,9 +1,9 @@
 module.exports = {
   apps : [{
-    script: 'DnA-backend/build/app.js',
+    script: './app.js',
     watch: false,
     name: "backend",
-    log_file: "DnA-backend/logs/backend.log",
+    log_file: "./logs/backend.log",
     time: true,
     listen_timeout: 10000,
     max_restarts: 15,
