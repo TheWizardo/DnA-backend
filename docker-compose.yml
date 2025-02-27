@@ -4,6 +4,8 @@ services:
     container_name: node_app_container
     # "expose" is used to make the container reachable INSIDE the Docker network.
     # We'll not publish port 4272 directly to the host.
+    volumes:
+      - ./build/Assets/data:Assets/data:rw
     expose:
       - "4272"
     restart: unless-stopped
