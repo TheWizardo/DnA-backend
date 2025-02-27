@@ -7,10 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "ts-node src/app.ts NODE_ENV=development",
     "start-prod": "ts-node src/app.ts NODE_ENV=production",
+    "inner-delete-build": "rmdir /s /q build",
     "inner-build": "tsc --build",
     "inner-copy-package": "copy package.json build",
     "inner-copy-assets": "robocopy ./src/Assets ./build/Assets /e",
-    "build": "npm run inner-build & npm run inner-copy-package & npm run inner-copy-assets"
+    "build": "npm run inner-delete-build && npm run inner-build & npm run inner-copy-package & npm run inner-copy-assets"
   },
   "keywords": [],
   "author": "oz",

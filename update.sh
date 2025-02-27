@@ -50,6 +50,7 @@ for file in DnA-backend/build/Assets/data/*; do
         chmod 666 "$file"
     fi
 done
+ls -l DnA-backend/build/Assets/data >> logs/$datetime.log
 
 cd DnA-backend
 now=$(date +"%F %T.%3N")
