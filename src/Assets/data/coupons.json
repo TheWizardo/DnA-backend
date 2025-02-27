@@ -1,1 +1,16 @@
-[{"id":"a2a35466-1e1f-476e-85d4-40c107db4c04","code":"itNSHOHe3U7djXPCWHJ/qi0aq8D22E/ePk5vgCCCizNeAQQEtkFYWndv6Q1hbDcWWQDZQ8ANogB7YITesTFWc3Njm/mN5kR1+PnR75TjzBMp2NxTGY1eV+OXJIeCVupF4B+Kyr2mTwtDpG3Y6xJGklmIixO5KeP4dQIqEi3UT4k=","type":"percentDiscount","discount":25},{"id":"ec266085-83fd-456e-a916-f36acbed676d","code":"ugD15iE/6ANo/yVgNldYwbwBvJabYHqgKe1ZW7syr72gk9wMGE2bVn0Wk5aMxcfyE+fPnhx0ZGZwUy22DgfpdQ==","type":"valueDiscount","discount":15},{"id":"8e14f720-5619-49fd-a051-4ea2bcf9a1ff","code":"gip+mZLr0D3cC3DleydnOQMsnIx30ogMBxRmDwfxrRbvYkw92IMKHXg0G6nfoaAvGGBIBRbSG6f56Jd/bW2/aA==","type":"percentDiscount","discount":25}]
+[
+  {
+    "id": "34ca27d6-5819-4113-8b3f-490e3aefb499",
+    "code": "bspHo6Njg8hr0jP8NJHVhuF40yVjHz2R89mmP7Rgh21EGGOYiCw77TquaC1GAdBR8B2SQdlFZ3yGPqnbeUyEUm9VOnX0CutfS6JDG0O0jRRcRG+eGatGna0BSFnr6Fc658li/1V6RM/m4cG5GHSAYU9fV4y5F1OCIkixQL2tdQQ=1b4fb2acd059695a15444b88664a21274d09edecc987f86c15cfa7b5f6211708",
+    "type": "percentDiscount",
+    "discount": 15,
+    "conditions": []
+  },
+  {
+    "id": "5b4ef24c-5f21-4719-8f90-2188f7c1d7d0",
+    "code": "FGessgu1ryMYPqssttxn8Nx0zWsyR5BBXzxvqB6P/bbhjaioM2A4YV3aA/y/YQo6LwxWrWsLxBMBb2r3d+vwPwtre/CbiZwnodkm0ncEbo6ckT8kDylAGWu8YMiX3KRxmg/7LO02lhGfzKorOC8dEpDPfJTKvAcbefUECfVibLg=bffe150787ff8fc0815f97453d94d054e152548f69be3c9a0daa09d5619a698f",
+    "type": "percentDiscount",
+    "discount": 15,
+    "conditions": []
+  }
+]
